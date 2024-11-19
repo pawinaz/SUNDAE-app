@@ -37,10 +37,6 @@
                   </v-btn>
                 </v-col>
               </v-row>
-            </v-card>
-          </div>
-          <div>
-            <v-card elevation="10" style="padding: 2%; margin-top: 2%; margin-bottom: 2%">
               <v-data-table :headers="$vuetify.breakpoint.smAndDown ? headersMobile : headers
                 " :items="ListData" hide-default-footer style="color: #332f2fde" :items-per-page="itemsPerPage"
                 :mobile-breakpoint="0" :page.sync="page" single-line hide-details>
@@ -113,19 +109,21 @@
                         > {{ item.active == true ? 'active' : 'Inactive' }}</span>
                       </v-btn>
                     </td>
-                    <td style="text-align: center" >
-                      <v-btn :disabled="!item.active" class="mx-2" fab dark small icon color="#2196F3"
-                        @click="ShowQRPreRegister(item.invite_uid)">
-                        <v-icon dark>mdi-qrcode</v-icon>
-                      </v-btn>
-                      <v-btn class="mx-2" fab dark small icon color="orange"
-                        @click="ViewDataPreRegisterDialog(item.invite_uid)">
-                        <v-icon dark>mdi-eye</v-icon>
-                      </v-btn>
-                      <v-btn :disabled="!item.active" class="mx-2" fab dark small icon color="red"
-                        @click="cancelPreRegisterByUid(item.invite_uid)">
-                        <v-icon dark>mdi-cancel</v-icon>
-                      </v-btn>
+                    <td style="text-align: center">
+                      <!-- <div class="action-buttons"> -->
+                        <v-btn :disabled="!item.active" class="mx-2" fab dark small icon color="#2196F3"
+                          @click="ShowQRPreRegister(item.invite_uid)">
+                          <v-icon dark>mdi-qrcode</v-icon>
+                        </v-btn>
+                        <v-btn class="mx-2" fab dark small icon color="orange"
+                          @click="ViewDataPreRegisterDialog(item.invite_uid)">
+                          <v-icon dark>mdi-eye</v-icon>
+                        </v-btn>
+                        <v-btn :disabled="!item.active" class="mx-2" fab dark small icon color="red"
+                          @click="cancelPreRegisterByUid(item.invite_uid)">
+                          <v-icon dark>mdi-cancel</v-icon>
+                        </v-btn>
+                      <!-- </div> -->
                     </td>
                   </tr>
                 </template>
@@ -361,7 +359,7 @@ export default {
             icon: "error",
             title: "Error...",
             width: 900,
-            text: error.response?.data?.message || error.message || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง',
+            text: error.response?.data?.message || error.message || 'เกิดข้อผิดพลาด กรุณาลอใหม่อีกครั้ง',
           });
         });
     },
@@ -650,5 +648,11 @@ export default {
 
 .rect5 {
   animation-delay: -0.9s;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
