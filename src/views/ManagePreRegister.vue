@@ -10,7 +10,7 @@
                   color: #444444;
                 ">
                 Pre Register Management
-              </div>
+              </div> 
               <v-row>
                 <v-col cols="12" sm="6" md="4" lg="4" class="pt-5">
                   <v-text-field 
