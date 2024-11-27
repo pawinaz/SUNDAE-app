@@ -35,7 +35,7 @@
                     alt="Logo"
                     class="shrink app"
                     contain
-                    src="@/assets/Sundae_Logo.png"
+                    src="@/assets/sundae.png"
                     transition="scale-transition"
                     width="250"
                   />

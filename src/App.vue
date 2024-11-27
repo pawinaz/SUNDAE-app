@@ -29,14 +29,14 @@ export default {
   src: local("English"), url(./assets/Font/Kanit-Regular.ttf);
 }
 .v-content__wrap {
-  background-color: white;
+  background-color: #F6F1EE;
   width: 100%;
   height: 100%;
 }
 
 @media only screen and (max-width: 959px) {
   .v-content__wrap {
-    background-color: white;
+    background-color: #ffffff;
     width: 80%;
   }
 }
