@@ -6,7 +6,7 @@
           width="400"
           :class="$vuetify.breakpoint.xs ? 'rounded-0' : 'rounded-lg'"
         >
-          <v-card-text style="width: auto">
+          <v-card-text style="width: auto" >
             <v-tabs class="d-none" v-model="model"></v-tabs>
             <v-tabs-items v-model="model">
               <v-tab-item :value="`tab-1`">

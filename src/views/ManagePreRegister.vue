@@ -5,31 +5,36 @@
         <v-card-text>
           <div>
             <v-card elevation="10" style="padding: 2%; margin-top: 2%; margin-bottom: 2%">
-              <div class="pb-4" style="
-                  font-size: 20px;
-                  color: #444444;
-                ">
-                Pre Register Management
-              </div>
-              <v-row>
-                <v-col cols="12" sm="6" md="4" lg="4" class="pt-5">
+              <v-row align="center" justify="space-between" class="pa-4">
+                <v-col cols="12" sm="6" md="4" lg="3" class="d-flex justify-start">
+                  <v-select
+                    v-model="selectedFilter"
+                    :items="filterOptions"
+                    label="Filter by"
+                    class="mr-2"
+                    color="#3A5A40" 
+                    @change="applyFilter"
+                    style="max-width: 200px;"
+                  ></v-select>
+                </v-col>
+                <v-col cols="12" sm="6" md="4" lg="3" class="d-flex justify-end">
                   <v-text-field 
                     v-model="search"
                     label="Search" 
-                    append-icon="mdi-database-search-outline"
+                    append-icon="mdi-magnify"
                     @keyup.enter="getDataTransactionPreRegister" 
                     clearable 
                     outlined 
                     dense
-                    placeholder="Search with Name, Phonenumber"
+                    class="mr-2"
+                    color="#3A5A40" 
+                    style="max-width: 200px;"
                   ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="4" lg="4" offset-md="4" class="pt-5" align="end">
                   <v-btn 
                     height="40" 
-                    min-width="180" 
-                    color="primary" 
-                    class="white--text text-capitalize" 
+                    min-width="150"
+                    color="#3A5A40" 
+                    class="white--text text-capitalize"
                     @click="CreatePreRegister()"
                   >
                     <v-icon left>mdi-plus</v-icon>
@@ -37,8 +42,11 @@
                   </v-btn>
                 </v-col>
               </v-row>
-              <v-data-table :headers="$vuetify.breakpoint.smAndDown ? headersMobile : headers
-                " :items="ListData" hide-default-footer style="color: #332f2fde" :items-per-page="itemsPerPage"
+              <div class="pb-4" style="font-size: 24px; font-weight: bold; color: #444444;">
+                Pre Register Management
+              </div>
+              <v-data-table :headers="$vuetify.breakpoint.smAndDown ? headersMobile : headers"
+                :items="filteredListData" hide-default-footer style="color: #332f2fde" :items-per-page="itemsPerPage"
                 :mobile-breakpoint="0" :page.sync="page" single-line hide-details>
                 
                 <template v-if="!$vuetify.breakpoint.smAndDown" v-slot:item="{ item, index }">
@@ -110,20 +118,22 @@
                       </v-btn>
                     </td>
                     <td style="text-align: center">
-                      <!-- <div class="action-buttons"> -->
-                        <v-btn :disabled="!item.active" class="mx-2" fab dark small icon color="#2196F3"
-                          @click="ShowQRPreRegister(item.invite_uid)">
-                          <v-icon dark>mdi-qrcode</v-icon>
-                        </v-btn>
-                        <v-btn class="mx-2" fab dark small icon color="orange"
-                          @click="ViewDataPreRegisterDialog(item.invite_uid)">
-                          <v-icon dark>mdi-eye</v-icon>
-                        </v-btn>
-                        <v-btn :disabled="!item.active" class="mx-2" fab dark small icon color="red"
-                          @click="cancelPreRegisterByUid(item.invite_uid)">
-                          <v-icon dark>mdi-cancel</v-icon>
-                        </v-btn>
-                      <!-- </div> -->
+                      <v-row justify="center">
+                        <v-col class="d-flex justify-center">
+                          <v-btn :disabled="!item.active" class="mx-1" fab dark small icon color="#2196F3"
+                            @click="ShowQRPreRegister(item.invite_uid)">
+                            <v-icon dark>mdi-qrcode</v-icon>
+                          </v-btn>
+                          <v-btn class="mx-1" fab dark small icon color="orange"
+                            @click="ViewDataPreRegisterDialog(item.invite_uid)">
+                            <v-icon dark>mdi-eye</v-icon>
+                          </v-btn>
+                          <v-btn :disabled="!item.active" class="mx-1" fab dark small icon color="red"
+                            @click="cancelPreRegisterByUid(item.invite_uid)">
+                            <v-icon dark>mdi-cancel</v-icon>
+                          </v-btn>
+                        </v-col>
+                      </v-row>
                     </td>
                   </tr>
                 </template>
@@ -132,12 +142,12 @@
                 <v-col cols="12" md="4"></v-col>
                 <v-col cols="12" md="3">
                   <v-pagination v-model="page" :total-visible="20" :length="pageCount"
-                    @input="ChangePage(page)"></v-pagination>
+                    @input="ChangePage(page)" color="#3A5A40"></v-pagination>
                 </v-col>
                 <v-col cols="12" md="3"></v-col>
                 <v-col cols="12" md="2">
                   <v-autocomplete dense solo v-model="itemsPerPage" @input="ChangePerPage(itemsPerPage)" label="10/page"
-                    :items="items"></v-autocomplete>
+                    :items="items" ></v-autocomplete>
                 </v-col>
               </v-row>
             </v-card>
@@ -237,6 +247,8 @@ export default {
       Start_Date: "",
       End_Date: "",
       CreateTime: "",
+      selectedFilter: null,
+      filterOptions: ['Active', 'Inactive'],
     };
   },
   computed: {
@@ -322,6 +334,20 @@ export default {
           sortable: false,
         },
       ];
+    },
+    filteredListData() {
+      if (!this.selectedFilter || this.selectedFilter === 'All') {
+        return this.ListData; 
+      }
+      
+      return this.ListData.filter(item => {
+        if (this.selectedFilter === 'Active') {
+          return item.active === true;
+        } else if (this.selectedFilter === 'Inactive') {
+          return item.active === false;
+        }
+        return true;
+      });
     },
   },
 
@@ -562,18 +588,22 @@ export default {
         strTime
       );
     },
+
+    applyFilter() {
+    },
   },
 };
 </script>
 <style scoped>
 *>>>.v-data-table-header {
-  background-color: rgb(248, 247, 247);
+  background-color: #A3B18A;
   color: #ffffff !important;
+  font-weight: bold;
 }
 
 *>>>.v-data-table-header th {
-  font-size: 14px !important;
-  color: #252424 !important;
+  font-size: 16px !important;
+  color: #ffffff !important;
 }
 
 @keyframes load {
@@ -654,5 +684,9 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.v-select, .v-text-field {
+  max-width: 200px;
 }
 </style>
