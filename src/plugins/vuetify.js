@@ -17,7 +17,8 @@ export default new Vuetify({
             white: '#ffffff',
             pink: '#E27278',
             warning: '#FAA91B',
-            darkprimary: '#0A3957'
+            darkprimary: '#0A3957',
+            
             
           },
           dark: {
@@ -26,6 +27,7 @@ export default new Vuetify({
             white: '#ffffff',
             
           }
+          
         },
       },
 });
