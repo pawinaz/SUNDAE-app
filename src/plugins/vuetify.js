@@ -9,23 +9,23 @@ export default new Vuetify({
         iconfont: 'mdi', // default - only for display purposes
     },
     theme: {
-        dark: false,
-        themes: {
-          light: {
-            primary: '#126496',
-            secondary: '#8E8E8E',
-            white: '#ffffff',
-            pink: '#E27278',
-            warning: '#FAA91B',
-            darkprimary: '#0A3957'
-            
-          },
-          dark: {
-            primary: '#126496',
-            secondary: '#8E8E8E',
-            white: '#ffffff',
-            
-          }
+      dark: false, // ใช้ธีมแบบ Light เป็นค่าเริ่มต้น
+      themes: {
+        light: {
+          primary: '#23B5D3', // Pacific Cyan
+          secondary: '#75ABBC', // Moonstone
+          accent: '#A2AEBB', // Cadet Gray
+          error: '#FF5252', // สีแดงสำหรับ Error
+          background: '#DFE0E2', // Platinum (สีพื้นหลังหลัก)
         },
+        dark: {
+          primary: '#071013', // Rich Black
+          secondary: '#23B5D3', // Pacific Cyan (สามารถใช้เป็น Secondary)
+          accent: '#75ABBC', // Moonstone สำหรับไฮไลต์
+          error: '#FF5252', // สีแดงสำหรับ Error
+          background: '#212121', // สีดำเจ็ท
+        },
+          
       },
+    },
 });

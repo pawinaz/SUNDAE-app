@@ -4,48 +4,77 @@
       <div style="margin-left: 10px; margin-right: 10px">
         <v-card-text>
           <div>
-            <v-card elevation="10" style="padding: 2%; margin-top: 2%; margin-bottom: 2%">
-              <div class="pb-4" style="
-                  font-size: 20px;
-                  color: #444444;
-                ">
-                Pre Register Management
-              </div> 
-              <v-row>
-                <v-col cols="12" sm="6" md="4" lg="4" class="pt-5">
-                  <v-text-field 
-                    v-model="search"
-                    label="Search" 
-                    append-icon="mdi-database-search-outline"
-                    @keyup.enter="getDataTransactionPreRegister" 
-                    clearable 
-                    outlined 
-                    dense
-                    placeholder="Search with Name, Phonenumber"
-                  ></v-text-field>
+            <v-card
+              elevation="10"
+              style="padding: 2%; margin-top: 0%; margin-bottom: 2%"
+            >
+              <v-row align="center" justify="space-between" class="pa-4">
+                <v-col>
+                  <div
+                  class="pb-4"
+                  style="font-size: 24px; font-weight: bold; color: #444444">
+                  Pre Register Management
+                </div>
                 </v-col>
-                <v-col cols="12" sm="6" md="4" lg="4" offset-md="4" class="pt-5" align="end">
-                  <v-btn 
-                    height="40" 
-                    min-width="180" 
-                    color="primary" 
-                    class="white--text text-capitalize" 
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="4"
+                  lg="8"
+                  class="d-flex justify-end"
+                >
+                  <v-text-field
+                    v-model="search"
+                    label="Search"
+                    append-icon="mdi-magnify"
+                    @keyup.enter="getDataTransactionPreRegister"
+                    clearable
+                    outlined
+                    dense
+                    class="ma-2"
+                    color="primary"
+                    style="max-width: 200px"
+                  ></v-text-field>
+                  <v-select
+                    v-model="selectedFilter"
+                    :items="filterOptions"
+                    label="Filter by"
+                    class="ma-2"
+                    color="primary"
+                    outlined
+                    dense
+                    @change="applyFilter"
+                    style="max-width: 200px"
+                    clearable
+                  ></v-select>
+                  <v-btn
+                    height="40"
+                    min-width="150"
+                    color="primary"
+                    class="ma-2 white--text"
                     @click="CreatePreRegister()"
-                  >
-                    <v-icon left>mdi-plus</v-icon>
-                    PRE REGISTER
+                  >PRE REGISTER
+                  <v-icon right>mdi-plus</v-icon>
                   </v-btn>
                 </v-col>
               </v-row>
-            </v-card>
-          </div>
-          <div>
-            <v-card elevation="10" style="padding: 2%; margin-top: 2%; margin-bottom: 2%">
-              <v-data-table :headers="$vuetify.breakpoint.smAndDown ? headersMobile : headers
-                " :items="ListData" hide-default-footer style="color: #332f2fde" :items-per-page="itemsPerPage"
-                :mobile-breakpoint="0" :page.sync="page" single-line hide-details>
-                
-                <template v-if="!$vuetify.breakpoint.smAndDown" v-slot:item="{ item, index }">
+              <v-data-table
+                :headers="
+                  $vuetify.breakpoint.smAndDown ? headersMobile : headers
+                "
+                :items="filteredListData"
+                hide-default-footer
+                style="color: #332f2fde"
+                :items-per-page="itemsPerPage"
+                :mobile-breakpoint="0"
+                :page.sync="page"
+                single-line
+                hide-details
+              >
+                <template
+                  v-if="!$vuetify.breakpoint.smAndDown"
+                  v-slot:item="{ item, index }"
+                >
                   <tr>
                     <td class="header-table-css">{{ no_run + (index + 1) }}</td>
                     <td class="header-table-css">{{ item.visitorName }}</td>
@@ -62,36 +91,59 @@
                       {{ ChangeFormatDate(item.createTime) }}
                     </td>
                     <td class="text-center">
-                      <v-btn :color="GetColor(item.active)" 
-                            rounded
-                            icon
-                            class="text-capitalize" 
-                            style="pointer-events: none"
-                            depressed>
-                        <span :style="{color: GetColorText(item.active)}">
-                          {{ item.active == true ? 'active' : 'Inactive' }}
+                      <v-btn
+                        :color="GetColor(item.active)"
+                        rounded
+                        icon
+                        class="text-capitalize"
+                        style="pointer-events: none"
+                        depressed
+                      >
+                        <span :style="{ color: GetColorText(item.active) }">
+                          {{ item.active == true ? "active" : "Inactive" }}
                         </span>
                       </v-btn>
                     </td>
                     <td style="text-align: center">
                       <template>
-                        <v-btn :disabled="!item.active" class="mx-2" fab dark small icon color="#2196F3" @click="
-                          ShowQRPreRegister(item.invite_uid)
-                          ">
-                          <v-icon dark>mdi-qrcode</v-icon>
+                        <v-btn
+                          :disabled="!item.active"
+                          class="mx-2"
+                          fab
+                          dark
+                          small
+                          icon
+                          color="amber"
+                          @click="ShowQRPreRegister(item.invite_uid)"
+                        >
+                          <v-icon dark>mdi-qrcode-scan</v-icon>
                         </v-btn>
                       </template>
                       <template>
-                        <v-btn class="mx-2" fab dark small icon color="orange" @click="
-                          ViewDataPreRegisterDialog(item.invite_uid)
-                          ">
-                          <v-icon dark>mdi-eye</v-icon>
+                        <v-btn
+                          class="mx-2"
+                          fab
+                          dark
+                          small
+                          icon
+                          color="cyan"
+                          @click="ViewDataPreRegisterDialog(item.invite_uid)"
+                        >
+                          <v-icon dark>mdi-eye-outline</v-icon>
                         </v-btn>
                       </template>
                       <template>
-                        <v-btn :disabled="!item.active" class="mx-2" fab dark small icon color="red"
-                          @click="cancelPreRegisterByUid(item.invite_uid)">
-                          <v-icon dark>mdi-cancel</v-icon>
+                        <v-btn
+                          :disabled="!item.active"
+                          class="mx-2"
+                          fab
+                          dark
+                          small
+                          icon
+                          color="red"
+                          @click="cancelPreRegisterByUid(item.invite_uid)"
+                        >
+                          <v-icon dark>mdi-delete-outline</v-icon>
                         </v-btn>
                       </template>
                     </td>
@@ -103,29 +155,61 @@
                     <td class="header-table-css">{{ item.visitorName }}</td>
                     <!-- <td class="header-table-css">{{ item.phoneNumber }}</td> -->
                     <td class="text-center">
-                      <v-btn :color="GetColor(item.active)" 
-                            rounded
-                            icon
-                            class="text-capitalize" 
-                            style="pointer-events: none"
-                            depressed>
-                        <span :style="{color:GetColorText(item.active)}"
-                        > {{ item.active == true ? 'active' : 'Inactive' }}</span>
+                      <v-btn
+                        :color="GetColor(item.active)"
+                        rounded
+                        icon
+                        class="text-capitalize"
+                        style="pointer-events: none"
+                        depressed
+                      >
+                        <span :style="{ color: GetColorText(item.active) }">
+                          {{
+                            item.active == true ? "active" : "Inactive"
+                          }}</span
+                        >
                       </v-btn>
                     </td>
-                    <td style="text-align: center" >
-                      <v-btn :disabled="!item.active" class="mx-2" fab dark small icon color="#2196F3"
-                        @click="ShowQRPreRegister(item.invite_uid)">
-                        <v-icon dark>mdi-qrcode</v-icon>
-                      </v-btn>
-                      <v-btn class="mx-2" fab dark small icon color="orange"
-                        @click="ViewDataPreRegisterDialog(item.invite_uid)">
-                        <v-icon dark>mdi-eye</v-icon>
-                      </v-btn>
-                      <v-btn :disabled="!item.active" class="mx-2" fab dark small icon color="red"
-                        @click="cancelPreRegisterByUid(item.invite_uid)">
-                        <v-icon dark>mdi-cancel</v-icon>
-                      </v-btn>
+                    <td style="text-align: center">
+                      <v-row justify="center">
+                        <v-col class="d-flex justify-center">
+                          <v-btn
+                            :disabled="!item.active"
+                            class="mx-1"
+                            fab
+                            dark
+                            small
+                            icon
+                            color="amber"
+                            @click="ShowQRPreRegister(item.invite_uid)"
+                          >
+                            <v-icon dark>mdi-qrcode-scan</v-icon>
+                          </v-btn>
+                          <v-btn
+                            class="mx-1"
+                            fab
+                            dark
+                            small
+                            icon
+                            color="cyan"
+                            @click="ViewDataPreRegisterDialog(item.invite_uid)"
+                          >
+                            <v-icon dark>mdi-eye-outline</v-icon>
+                          </v-btn>
+                          <v-btn
+                            :disabled="!item.active"
+                            class="mx-1"
+                            fab
+                            dark
+                            small
+                            icon
+                            color="red"
+                            @click="cancelPreRegisterByUid(item.invite_uid)"
+                          >
+                            <v-icon dark>mdi-delete-outline</v-icon>
+                          </v-btn>
+                        </v-col>
+                      </v-row>
                     </td>
                   </tr>
                 </template>
@@ -133,13 +217,24 @@
               <v-row class="mt-5">
                 <v-col cols="12" md="4"></v-col>
                 <v-col cols="12" md="3">
-                  <v-pagination v-model="page" :total-visible="20" :length="pageCount"
-                    @input="ChangePage(page)"></v-pagination>
+                  <v-pagination
+                    v-model="page"
+                    :total-visible="20"
+                    :length="pageCount"
+                    @input="ChangePage(page)"
+                    color="primary"
+                  ></v-pagination>
                 </v-col>
                 <v-col cols="12" md="3"></v-col>
                 <v-col cols="12" md="2">
-                  <v-autocomplete dense solo v-model="itemsPerPage" @input="ChangePerPage(itemsPerPage)" label="10/page"
-                    :items="items"></v-autocomplete>
+                  <v-autocomplete
+                    dense
+                    solo
+                    v-model="itemsPerPage"
+                    @input="ChangePerPage(itemsPerPage)"
+                    label="10/page"
+                    :items="items"
+                  ></v-autocomplete>
                 </v-col>
               </v-row>
             </v-card>
@@ -153,43 +248,103 @@
         <v-card-title>
           <span style="font-size: 24px">Pre Register</span>
           <v-spacer></v-spacer>
-          <v-btn style="margin-top: -10px; z-index: 1" icon @click="PreRegisterDataDialog = false">
+          <v-btn
+            style="margin-top: -10px; z-index: 1"
+            icon
+            @click="PreRegisterDataDialog = false"
+          >
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-card-title>
         <v-card-text>
           <v-row>
             <v-col cols="12" md="6">
-              <v-text-field type="text" disabled label="VisitorName" v-model="VisitorName" outlined dense />
+              <v-text-field
+                type="text"
+                disabled
+                label="VisitorName"
+                v-model="VisitorName"
+                outlined
+                dense
+              />
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="12" md="6">
-              <v-text-field type="text" disabled label="Email" v-model="Email" outlined dense />
+              <v-text-field
+                type="text"
+                disabled
+                label="Email"
+                v-model="Email"
+                outlined
+                dense
+              />
             </v-col>
             <v-col cols="12" md="6">
-              <v-text-field type="text" disabled label="PhoneNumber" v-model="PhoneNumber" outlined dense />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" md="6">
-              <v-text-field type="text" disabled label="TowerName" v-model="TowerName" outlined dense />
-            </v-col>
-            <v-col cols="12" md="6">
-              <v-text-field type="text" disabled label="FloorName" v-model="FloorName" outlined dense />
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" md="6">
-              <v-text-field type="text" disabled label="StartDate" v-model="Start_Date" outlined dense />
-            </v-col>
-            <v-col cols="12" md="6">
-              <v-text-field type="text" disabled label="EndDate" v-model="End_Date" outlined dense />
+              <v-text-field
+                type="text"
+                disabled
+                label="PhoneNumber"
+                v-model="PhoneNumber"
+                outlined
+                dense
+              />
             </v-col>
           </v-row>
           <v-row>
             <v-col cols="12" md="6">
-              <v-text-field type="text" disabled label="CreateTime" v-model="CreateTime" outlined dense />
+              <v-text-field
+                type="text"
+                disabled
+                label="TowerName"
+                v-model="TowerName"
+                outlined
+                dense
+              />
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-text-field
+                type="text"
+                disabled
+                label="FloorName"
+                v-model="FloorName"
+                outlined
+                dense
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="6">
+              <v-text-field
+                type="text"
+                disabled
+                label="StartDate"
+                v-model="Start_Date"
+                outlined
+                dense
+              />
+            </v-col>
+            <v-col cols="12" md="6">
+              <v-text-field
+                type="text"
+                disabled
+                label="EndDate"
+                v-model="End_Date"
+                outlined
+                dense
+              />
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="6">
+              <v-text-field
+                type="text"
+                disabled
+                label="CreateTime"
+                v-model="CreateTime"
+                outlined
+                dense
+              />
             </v-col>
           </v-row>
         </v-card-text>
@@ -239,6 +394,8 @@ export default {
       Start_Date: "",
       End_Date: "",
       CreateTime: "",
+      selectedFilter: null,
+      filterOptions: ["Active", "Inactive"],
     };
   },
   computed: {
@@ -325,6 +482,20 @@ export default {
         },
       ];
     },
+    filteredListData() {
+      if (!this.selectedFilter || this.selectedFilter === "All") {
+        return this.ListData;
+      }
+
+      return this.ListData.filter((item) => {
+        if (this.selectedFilter === "Active") {
+          return item.active === true;
+        } else if (this.selectedFilter === "Inactive") {
+          return item.active === false;
+        }
+        return true;
+      });
+    },
   },
 
   async mounted() {
@@ -361,7 +532,10 @@ export default {
             icon: "error",
             title: "Error...",
             width: 900,
-            text: error.response?.data?.message || error.message || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง',
+            text:
+              error.response?.data?.message ||
+              error.message ||
+              "เกิดข้อผิดพลาด กรุณาลอใหม่อีกครั้ง",
           });
         });
     },
@@ -528,7 +702,7 @@ export default {
     },
 
     ShowQRPreRegister(data) {
-      window.open('QRPreRegister/' + data, '_blank');
+      window.open("QRPreRegister/" + data, "_blank");
     },
 
     GetColor(value) {
@@ -564,18 +738,21 @@ export default {
         strTime
       );
     },
+
+    applyFilter() {},
   },
 };
 </script>
 <style scoped>
-*>>>.v-data-table-header {
-  background-color: rgb(248, 247, 247);
+* >>> .v-data-table-header {
+  background-color: #071013;
   color: #ffffff !important;
+  font-weight: bold;
 }
 
-*>>>.v-data-table-header th {
-  font-size: 14px !important;
-  color: #252424 !important;
+* >>> .v-data-table-header th {
+  font-size: 16px !important;
+  color: #ffffff !important;
 }
 
 @keyframes load {
@@ -651,4 +828,11 @@ export default {
 .rect5 {
   animation-delay: -0.9s;
 }
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 </style>
