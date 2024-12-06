@@ -40,7 +40,7 @@
             <v-icon color="#126496">mdi-menu-down</v-icon>
           </v-btn>
           <div>
-            <span style="font-size: 18px; color: white; padding-right: 10px">{{
+            <span style="font-size: 18px; color: black; padding-right: 10px">{{
               Username
             }}</span>
           </div>

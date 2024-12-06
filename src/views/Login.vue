@@ -8,7 +8,7 @@
           style="top: 50%; left: 50%; transform: translate(-50%, -50%)"
           shaped
         >
-          <v-card-text style="width: auto">
+          <v-card-text style="width: auto" >
             <v-tabs class="d-none" v-model="model"></v-tabs>
             <v-tabs-items v-model="model">
               <v-tab-item :value="`tab-1`">

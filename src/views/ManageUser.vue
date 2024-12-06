@@ -2,44 +2,40 @@
   <div class="invisible-scrollbar">
     <v-card style="display: contents">
       <div style="margin-left: 10px; margin-right: 10px">
-        <div
-          class="pt-8"
-          style="
-            font-size: 20px;
-            margin-left: 1rem;
-            margin-right: 1rem;
-            color: #444444;
-          "
-        >
-          User Management
-        </div>
         <v-card-text>
           <div>
             <v-card
               elevation="10"
-              style="padding: 2%; margin-top: 2%; margin-bottom: 2%"
+              style="padding: 2%; margin-top: 0%; margin-bottom: 2%"
             >
-              <v-row>
-                <v-col cols="12" sm="6" md="4" lg="4" class="pt-5">
+              <v-row align="center" justify="end" class="pa-4">
+                <v-col>
+                  <div
+                class="pb-4"
+                style="font-size: 24px; font-weight: bold; color: #444444"
+              >
+                User Management
+              </div>
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="4"
+                  lg="3"
+                  class="d-flex justify-end"
+                >
                   <v-text-field
                     label="Search"
-                    append-icon="mdi-database-search-outline"
+                    append-icon="mdi-magnify"
                     v-model="search"
                     v-on:keyup.enter="SearchDataUser(search)"
                     clearable
                     outlined
                     dense
+                    color="primary"
                   ></v-text-field>
                 </v-col>
               </v-row>
-            </v-card>
-          </div>
-
-          <div>
-            <v-card
-              elevation="10"
-              style="padding: 2%; margin-top: 2%; margin-bottom: 2%"
-            >
               <v-data-table
                 :headers="
                   $vuetify.breakpoint.smAndDown ? headersMobile : headers
@@ -113,47 +109,37 @@
                         <v-icon color="red">mdi-close-circle</v-icon>
                       </template>
                     </td>
-                    <!-- <td style="text-align: center">
-                      <template v-if="item.active">
-                        <v-icon color="green">mdi-check-circle</v-icon>
-                      </template>
-                      <template v-else>
-                        <v-icon color="red">mdi-close-circle</v-icon>
-                      </template>
-                    </td> -->
-                    <td
-                      style="
-                        padding-bottom: 5px;
-                        display: flex;
-                        flex-direction: column-reverse;
-                        align-items: center;
-                      "
-                    >
+                    <td class="text-center">
                       <v-btn
                         :color="GetColor(item.active)"
                         rounded
+                        icon
                         class="text-capitalize"
+                        style="pointer-events: none"
                         depressed
-                        style="width: 100px"
                       >
-                        <span :style="{ color: GetColorText(item.active) }">{{
-                          item.active == true ? "Active" : "InActive"
-                        }}</span>
+                        <span :style="{ color: GetColorText(item.active) }">
+                          {{ item.active == true ? "active" : "Inactive" }}
+                        </span>
                       </v-btn>
                     </td>
                     <td style="text-align: center">
-                      <v-btn
-                        class="mx-2"
-                        fab
-                        dark
-                        small
-                        color="orange"
-                        @click="
-                          OpenUserDetailDialog(item.userID, item.statusUse)
-                        "
-                      >
-                        <v-icon dark> mdi-pencil-outline </v-icon>
-                      </v-btn>
+                      <template>
+                        <v-btn
+                          :disabled="!item.active"
+                          class="mx-2"
+                          fab
+                          dark
+                          small
+                          icon
+                          color="orange"
+                          @click="
+                            OpenUserDetailDialog(item.userID, item.statusUse)
+                          "
+                        >
+                          <v-icon dark> mdi-pencil-outline </v-icon>
+                        </v-btn>
+                      </template>
                       <template v-if="!item.active">
                         <v-btn
                           class="mx-2"
@@ -178,6 +164,7 @@
                           fab
                           dark
                           small
+                          icon
                           color="red"
                           @click="
                             OpenChangeActiveUserDialog(
@@ -187,7 +174,7 @@
                             )
                           "
                         >
-                          <v-icon dark>mdi-trash-can-outline </v-icon>
+                        <v-icon dark>mdi-delete-outline</v-icon>
                         </v-btn>
                       </template>
                     </td>
@@ -208,7 +195,8 @@
                         fab
                         dark
                         small
-                        color="#4169E1"
+                        icon
+                        color="moonstone"
                         @click="
                           OpenUserDetailDialog(item.userID, item.statusUse)
                         "
@@ -221,6 +209,7 @@
                           fab
                           dark
                           small
+                          icon
                           color="green"
                           @click="
                             OpenChangeActiveUserDialog(
@@ -239,6 +228,7 @@
                           fab
                           dark
                           small
+                          icon
                           color="red"
                           @click="
                             OpenChangeActiveUserDialog(
@@ -248,7 +238,7 @@
                             )
                           "
                         >
-                          <v-icon dark>mdi-trash-can-outline </v-icon>
+                          <v-icon dark>mdi-delete-outline</v-icon>
                         </v-btn>
                       </template>
                     </td>
@@ -264,6 +254,7 @@
                     :total-visible="20"
                     :length="pageCount"
                     @input="ChangePage(page)"
+                    color="primary"
                   ></v-pagination>
                 </v-col>
                 <v-col cols="12" md="3"></v-col>
@@ -329,7 +320,7 @@
           <v-row class="mt-5">
             <v-col cols="12" md="6">
               <v-text-field
-                type="text"                
+                type="text"
                 v-model="Username"
                 label="Username"
                 outlined
@@ -479,17 +470,6 @@
               </v-radio-group>
             </v-col>
           </v-row>
-          <!-- <v-row>
-            <v-col cols="12" md="12">
-              <h4 style="color: black">LINK STATUS</h4>
-              <template v-if="StatusUse_User">
-                <v-icon color="green">mdi-circle</v-icon>
-              </template>
-              <template v-else>
-                <v-icon color="red">mdi-circle</v-icon>
-              </template>
-            </v-col>
-          </v-row> -->
           <v-row>
             <v-spacer></v-spacer>
             <v-col cols="12" md="3">
@@ -529,7 +509,7 @@
           </template>
           <template v-else>
             <h4>
-              คุณต้องการ Active Username : {{ UserName_Register }} ใช่หรือไม่ ??
+              คุณต้งการ Active Username : {{ UserName_Register }} ใช่หรือไม่ ??
             </h4>
           </template>
         </v-card-title>
@@ -648,11 +628,6 @@ export default {
           align: "left",
           sortable: false,
         },
-        // {
-        //   text: "Telephone",
-        //   align: "left",
-        //   sortable: false,
-        // },
         {
           text: "Role Name",
           align: "left",
@@ -856,49 +831,48 @@ export default {
 
     getMasMemberByMemberID(member) {
       let self = this;
-      if(member != null){
-      let temp = {
-        MemberID: member,
-      };
-      axios
-        .post(`${self.url}Management/getMasMemberByMemberID`, temp)
-        .then(function (response) {
-          if (response.data.status == 0) {
-            self.UserID = response.data.data.userID;
-            self.RoleId = response.data.data.roleID;
-            self.SearchMemberID = response.data.data.member_Id;
-            self.Username = response.data.data.username;
-            self.Password = response.data.data.password;
-            self.MemberID = response.data.data.member_Id;
-            self.CardID = response.data.data.card_id;
-            self.TenantID = response.data.data.tenantID;
-            self.Tenant = response.data.data.tenant;
-            self.FirstName = response.data.data.firstname;
-            self.LastName = response.data.data.lastname;
-            self.Email = response.data.data.email;
-            self.Telephone = response.data.data.telephone;
-            self.ActiveStatus =
-              response.data.data.active == true
-                ? "1"
-                : response.data.data.active == false
-                ? "2"
-                : null;
-            self.RedemptionType = response.data.data.redemptionType;
-            self.UserLevel = response.data.data.userStampLevel;
-            self.Department = response.data.data.departmentID;
-            self.RedemptionStatus = response.data.data.redemption;
-          }
-        })
-        .catch(function (error) {
-          Swal.fire({
-            icon: "error",
-            title: "Error...",
-            width: 500,
-            text: error.response.data.message,
+      if (member != null) {
+        let temp = {
+          MemberID: member,
+        };
+        axios
+          .post(`${self.url}Management/getMasMemberByMemberID`, temp)
+          .then(function (response) {
+            if (response.data.status == 0) {
+              self.UserID = response.data.data.userID;
+              self.RoleId = response.data.data.roleID;
+              self.SearchMemberID = response.data.data.member_Id;
+              self.Username = response.data.data.username;
+              self.Password = response.data.data.password;
+              self.MemberID = response.data.data.member_Id;
+              self.CardID = response.data.data.card_id;
+              self.TenantID = response.data.data.tenantID;
+              self.Tenant = response.data.data.tenant;
+              self.FirstName = response.data.data.firstname;
+              self.LastName = response.data.data.lastname;
+              self.Email = response.data.data.email;
+              self.Telephone = response.data.data.telephone;
+              self.ActiveStatus =
+                response.data.data.active == true
+                  ? "1"
+                  : response.data.data.active == false
+                  ? "2"
+                  : null;
+              self.RedemptionType = response.data.data.redemptionType;
+              self.UserLevel = response.data.data.userStampLevel;
+              self.Department = response.data.data.departmentID;
+              self.RedemptionStatus = response.data.data.redemption;
+            }
+          })
+          .catch(function (error) {
+            Swal.fire({
+              icon: "error",
+              title: "Error...",
+              width: 500,
+              text: error.response.data.message,
+            });
           });
-        });
-      }
-      else{
+      } else {
         self.ClearDataUser();
       }
     },
@@ -1007,9 +981,6 @@ export default {
           if (response.data.status == 0) {
             self.ListData = response.data.data.listData;
             self.pageCount = response.data.data.count;
-            // self.pageCount = Math.ceil(
-            //   response.data.data.count / self.itemsPerPage
-            // );
             self.no_run = (self.page - 1) * self.itemsPerPage;
             self.LoadingDialog = false;
           }
@@ -1048,7 +1019,6 @@ export default {
         })
         .catch(function (error) {
           self.ChangeActiveUserDialog = false;
-          // self.LoadingDialog = false;
           Swal.fire({
             icon: "error",
             title: "Error...",
@@ -1182,11 +1152,11 @@ export default {
         })
         .catch(function (error) {
           Swal.fire({
-              icon: "error",
-              title: "Error...",
-              width: 500,
-              text: error.response.data.message,
-            });
+            icon: "error",
+            title: "Error...",
+            width: 500,
+            text: error.response.data.message,
+          });
           self.ChangeActiveUserDialog = false;
         });
     },
@@ -1243,7 +1213,7 @@ export default {
       self.Department = null;
       self.RedemptionStatus = false;
     },
-    
+
     GetColor(value) {
       if (value == true) {
         return "rgb(92, 184, 92,0.3)";
@@ -1264,7 +1234,7 @@ export default {
 </script>
 <style scoped>
 * >>> .v-data-table-header {
-  background-color: black;
+  background-color: #071013;
   color: #ffffff !important;
 }
 * >>> .v-data-table-header th {
