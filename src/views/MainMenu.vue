@@ -1,40 +1,51 @@
 <template>
-  <v-container style="max-width: 1200px;">
-    <v-row style="min-height: 80vh;" justify="center" align="center">
-      <v-col 
-        v-for="item in CardList" 
-        :key="item.id" 
-        cols="12" 
-        sm="6" 
-        md="4" 
-        lg="3"
-        class="menu-card-col"
-      >
-        <div class="card-wrapper">
-          <v-hover>
-            <template v-slot:default="{ hover }">
-              <v-card
-                :elevation="hover ? 12 : 2"
-                :class="{ 'on-hover': hover }"
-                class="menu-card"
-              >
-                <v-img
-                  :src="item.src"
-                  class="white--text align-end"
-                  gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
-                  height="200px"
-                  @click="NavigatePage(item.name)"
-                >
-                  <div class="card-overlay" :class="{ 'overlay-hover': hover }">
-                    <v-card-title
-                      class="justify-center text-center"
-                      v-text="item.name"
-                    ></v-card-title>
+  <v-container fluid class="menu-container">
+    <v-row justify="center" align="center" style="min-height: 80vh;">
+      <v-col cols="12" class="text-center">
+        <div class="menu-row">
+          <div 
+            v-for="item in CardList" 
+            :key="item.id" 
+            class="menu-item"
+            :style="{ '--index': item.index }"
+          >
+            <v-card
+              class="menu-card"
+              v-hover="{ value: hover }"
+              :class="{ 'menu-card-hover': hover }"
+              @click="NavigatePage(item.name)"
+            >
+              <v-img
+                :src="item.src"
+                height="250"
+                class="menu-image"
+                cover
+              ></v-img>
+              
+              <div class="menu-content">
+                <div class="menu-header">
+                  <h3 class="menu-title">{{ item.name }}</h3>
+                  <div class="menu-icon">
+                    <v-icon small color="primary">
+                      {{ getMenuIcon(item.name) }}
+                    </v-icon>
                   </div>
-                </v-img>
-              </v-card>
-            </template>
-          </v-hover>
+                </div>
+                
+                <p class="menu-description">{{ getMenuDescription(item.name) }}</p>
+                
+                <v-btn
+                  text
+                  color="primary"
+                  class="learn-more-btn"
+                  small
+                >
+                  Learn More
+                  <v-icon small right>mdi-arrow-right</v-icon>
+                </v-btn>
+              </div>
+            </v-card>
+          </div>
         </div>
       </v-col>
     </v-row>
@@ -54,86 +65,103 @@
 </template>
 
 <style scoped>
-.centered-input-header >>> input {
-  text-align: center;
-  color: black;
-}
-.TitleCSS {
-  font-size: 18px;
-  font-weight: 300;
-  color: black;
-}
-@font-face {
-  font-family: "Roboto", sans-serif;
-  src: local("English"), url(../assets/Font/Kanit-Regular.ttf);
-}
-* >>> .v-data-table-header {
-  background-color: #333333 !important;
-  color: #ffffff !important;
-}
-* >>> .v-data-table-header th {
-  font-size: 14px !important;
-  color: #ffffff !important;
+.menu-container {
+  max-width: 100%;
+  padding: 20px;
 }
 
-.menu-card-col {
-  padding: 12px;
+.menu-row {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 30px;
+  flex-wrap: wrap;
+  padding: 20px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-.card-wrapper {
-  perspective: 1000px;
+.menu-row::-webkit-scrollbar {
+  display: none;
+}
+
+.menu-item {
+  flex: 0 0 auto;
+  width: 350px;
+  max-width: 400px;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
 }
 
 .menu-card {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: pointer;
-  position: relative;
+  height: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.menu-card:hover {
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+.menu-image {
+  transition: all 0.3s ease;
+  height: 250px;
+  object-fit: cover;
+}
+
+.menu-content {
+  padding: 20px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.menu-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.menu-icon {
+  background: rgba(var(--v-primary-base), 0.1);
+  padding: 10px;
+  border-radius: 50%;
+}
+
+.menu-description {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 15px;
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-.menu-card.on-hover {
-  transform: scale(1.05);
+.learn-more-btn {
+  text-transform: none;
+  padding: 0;
+  align-self: flex-start;
 }
 
-.card-overlay {
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.1) 0%,
-    rgba(0, 0, 0, 0.5) 100%
-  );
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: flex-end;
-  transition: all 0.3s ease;
-}
-
-.overlay-hover {
-  background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.2) 0%,
-    rgba(0, 0, 0, 0.6) 100%
-  );
-}
-
-.v-card-title {
-  font-size: 22px !important;
-  font-weight: 500;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
-  transition: all 0.3s ease;
-  width: 100%;
-  padding: 16px;
-}
-
-.on-hover .v-card-title {
-  transform: translateY(-5px);
-}
-
-/* Add some animation for card appearance */
-@keyframes cardAppear {
+@keyframes fadeInUp {
   from {
     opacity: 0;
     transform: translateY(20px);
@@ -144,9 +172,68 @@
   }
 }
 
-.menu-card-col {
-  animation: cardAppear 0.5s ease forwards;
-  animation-delay: calc(var(--card-index) * 0.1s);
+.menu-item {
+  animation: fadeInUp 0.6s ease forwards;
+  animation-delay: calc(var(--index) * 0.1s);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+  .menu-row {
+    justify-content: center;
+    gap: 25px;
+    padding: 15px;
+  }
+
+  .menu-item {
+    width: 300px;
+    max-width: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-container {
+    padding: 10px;
+  }
+
+  .menu-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+  }
+
+  .menu-item {
+    width: 90%;
+    max-width: 400px;
+  }
+
+  .menu-image {
+    height: 200px;
+  }
+
+  .menu-title {
+    font-size: 1.3rem;
+  }
+
+  .menu-description {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .menu-item {
+    width: 95%;
+    max-width: 95%;
+  }
+
+  .menu-image {
+    height: 180px;
+  }
+
+  .menu-title {
+    font-size: 1.2rem;
+  }
 }
 </style>
 
@@ -230,11 +317,6 @@ export default {
             }
           }
           self.LoadingDialog = false;
-          self.$nextTick(() => {
-            document.querySelectorAll('.menu-card-col').forEach((card, index) => {
-              card.style.setProperty('--card-index', index);
-            });
-          });
         })
         .catch(function (error) {
           self.LoadingDialog = false;
@@ -258,8 +340,27 @@ export default {
       if(PageName == "Pre Register"){
         self.$router.push("/ManagePreRegister");
       }
+    },
+
+    getMenuIcon(name) {
+      const icons = {
+        'MyQR': 'mdi-qrcode',
+        'Redemption': 'mdi-gift',
+        'Call Lift': 'mdi-elevator',
+        'Pre Register': 'mdi-account-plus'
+      };
+      return icons[name] || 'mdi-apps';
+    },
+
+    getMenuDescription(name) {
+      const descriptions = {
+        'MyQR': 'Scan and manage your personal QR codes for quick access',
+        'Redemption': 'Redeem your Parking Redemption',
+        'Call Lift': 'Smart elevator calling system',
+        'Pre Register': 'Pre Register Management'
+      };
+      return descriptions[name] || '';
     }
   },
 };
 </script>
-  
