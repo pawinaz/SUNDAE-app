@@ -32,7 +32,7 @@
                     clearable
                     outlined
                     dense
-                    color="#3A5A40"
+                    color="primary"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -196,7 +196,7 @@
                         dark
                         small
                         icon
-                        color="orange"
+                        color="moonstone"
                         @click="
                           OpenUserDetailDialog(item.userID, item.statusUse)
                         "
@@ -254,7 +254,7 @@
                     :total-visible="20"
                     :length="pageCount"
                     @input="ChangePage(page)"
-                    color="#3A5A40"
+                    color="primary"
                   ></v-pagination>
                 </v-col>
                 <v-col cols="12" md="3"></v-col>
@@ -1234,7 +1234,7 @@ export default {
 </script>
 <style scoped>
 * >>> .v-data-table-header {
-  background-color: #a3b18a;
+  background-color: #071013;
   color: #ffffff !important;
 }
 * >>> .v-data-table-header th {

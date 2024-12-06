@@ -32,7 +32,7 @@
                     outlined
                     dense
                     class="ma-2"
-                    color="#3A5A40"
+                    color="primary"
                     style="max-width: 200px"
                   ></v-text-field>
                   <v-select
@@ -40,7 +40,7 @@
                     :items="filterOptions"
                     label="Filter by"
                     class="ma-2"
-                    color="#3A5A40"
+                    color="primary"
                     outlined
                     dense
                     @change="applyFilter"
@@ -50,7 +50,7 @@
                   <v-btn
                     height="40"
                     min-width="150"
-                    color="#3A5A40"
+                    color="primary"
                     class="ma-2 white--text"
                     @click="CreatePreRegister()"
                   >PRE REGISTER
@@ -113,7 +113,7 @@
                           dark
                           small
                           icon
-                          color="#2196F3"
+                          color="amber"
                           @click="ShowQRPreRegister(item.invite_uid)"
                         >
                           <v-icon dark>mdi-qrcode-scan</v-icon>
@@ -126,7 +126,7 @@
                           dark
                           small
                           icon
-                          color="orange"
+                          color="cyan"
                           @click="ViewDataPreRegisterDialog(item.invite_uid)"
                         >
                           <v-icon dark>mdi-eye-outline</v-icon>
@@ -180,7 +180,7 @@
                             dark
                             small
                             icon
-                            color="blue"
+                            color="amber"
                             @click="ShowQRPreRegister(item.invite_uid)"
                           >
                             <v-icon dark>mdi-qrcode-scan</v-icon>
@@ -191,7 +191,7 @@
                             dark
                             small
                             icon
-                            color="orange"
+                            color="cyan"
                             @click="ViewDataPreRegisterDialog(item.invite_uid)"
                           >
                             <v-icon dark>mdi-eye-outline</v-icon>
@@ -222,7 +222,7 @@
                     :total-visible="20"
                     :length="pageCount"
                     @input="ChangePage(page)"
-                    color="#3A5A40"
+                    color="primary"
                   ></v-pagination>
                 </v-col>
                 <v-col cols="12" md="3"></v-col>
@@ -745,7 +745,7 @@ export default {
 </script>
 <style scoped>
 * >>> .v-data-table-header {
-  background-color: #a3b18a;
+  background-color: #071013;
   color: #ffffff !important;
   font-weight: bold;
 }

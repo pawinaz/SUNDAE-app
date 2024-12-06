@@ -30,13 +30,13 @@
                   v-model="search"
                   v-on:keyup.enter="SearchDataRoleList(search)"
                   class="ma-2"
-                  color="#3A5A40"
+                  color="primary"
                   clearable
                   outlined
                   dense
                 ></v-text-field>
                 <v-btn
-                  color="#3A5A40"
+                  color="primary"
                   class="ma-2 white--text"
                   @click="OpenAddRoleDetailDialog()"
                   >Create
@@ -182,7 +182,7 @@
                   v-model="page"
                   :total-visible="20"
                   :length="pageCount"
-                  color="#3A5A40"
+                  color="primary"
                   @input="ChangePage(page)"
                 ></v-pagination>
               </v-col>
@@ -798,7 +798,7 @@ export default {
 </script>
   <style scoped>
 * >>> .v-data-table-header {
-  background-color: #a3b18a;
+  background-color: #071013;
   color: #ffffff !important;
 }
 * >>> .v-data-table-header th {
