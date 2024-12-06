@@ -9,49 +9,41 @@
             class="menu-item"
             :style="{ '--index': item.index }"
           >
-            <v-card
-              class="menu-card"
-              v-hover="{ value: hover }"
-              :class="{ 'menu-card-hover': hover }"
-              @click="NavigatePage(item.name)"
-            >
-              <v-img
-                :src="item.src"
-                height="250"
-                class="menu-image"
-                cover
-              ></v-img>
-              
-              <div class="menu-content">
-                <div class="menu-header">
-                  <h3 class="menu-title">{{ item.name }}</h3>
-                  <div class="menu-icon">
-                    <v-icon small color="primary">
-                      {{ getMenuIcon(item.name) }}
-                    </v-icon>
+            <v-hover v-slot="{ hover }">
+              <v-card
+                class="menu-card"
+                :elevation="hover ? 12 : 2"
+                :class="{ 'on-hover': hover }"
+                @click="NavigatePage(item.name)"
+              >
+                <v-img
+                  :src="item.src"
+                  height="250"
+                  class="menu-image"
+                  cover
+                ></v-img>
+                
+                <v-card-text class="menu-content pa-4">
+                  <div class="menu-header">
+                    <h3 class="menu-title">{{ item.name }}</h3>
+                    <v-avatar size="40" class="menu-icon">
+                      <v-icon color="white" >
+                        {{ getMenuIcon(item.name) }}
+                      </v-icon>
+                    </v-avatar>
                   </div>
-                </div>
-                
-                <p class="menu-description">{{ getMenuDescription(item.name) }}</p>
-                
-                <v-btn
-                  text
-                  color="primary"
-                  class="learn-more-btn"
-                  small
-                >
-                  Learn More
-                  <v-icon small right>mdi-arrow-right</v-icon>
-                </v-btn>
-              </div>
-            </v-card>
+                  
+                  <p class="menu-description">{{ getMenuDescription(item.name) }}</p>
+                </v-card-text>
+              </v-card>
+            </v-hover>
           </div>
         </div>
       </v-col>
     </v-row>
 
     <v-dialog v-model="LoadingDialog" persistent width="auto">
-      <div class="loading-box">
+      <v-card class="loading-box">
         <div class="inter-load">
           <div class="rect rect1"></div>
           <div class="rect rect2"></div>
@@ -59,7 +51,7 @@
           <div class="rect rect4"></div>
           <div class="rect rect5"></div>
         </div>
-      </div>
+      </v-card>
     </v-dialog>
   </v-container>
 </template>
@@ -96,18 +88,16 @@
 
 .menu-card {
   height: 100%;
-  border-radius: 16px;
+  border-radius: 16px ;
   overflow: hidden;
   transition: all 0.3s ease;
-  background: #fff;
+  background: #A3B18A ;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.menu-card:hover {
+.menu-card.on-hover {
   transform: translateY(-10px) scale(1.03);
-  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
 }
 
 .menu-image {
@@ -133,18 +123,18 @@
 .menu-title {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #333;
+  color: #ffffff;
   margin: 0;
 }
 
 .menu-icon {
-  background: rgba(var(--v-primary-base), 0.1);
+  background: rgba(255, 255, 255, 0.1) ;
   padding: 10px;
   border-radius: 50%;
 }
 
 .menu-description {
-  color: #666;
+  color: #ffffff;
   font-size: 1rem;
   line-height: 1.5;
   margin-bottom: 15px;
@@ -345,7 +335,7 @@ export default {
     getMenuIcon(name) {
       const icons = {
         'MyQR': 'mdi-qrcode',
-        'Redemption': 'mdi-gift',
+        'Redemption': 'mdi-account-cash-outline',
         'Call Lift': 'mdi-elevator',
         'Pre Register': 'mdi-account-plus'
       };

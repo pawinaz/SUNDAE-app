@@ -1,10 +1,12 @@
 <template>
-  <div>
-    <v-container>
-      <v-row style="min-height: 90vh" justify="center" align="center">
+  <div class="split-container">
+    <v-row>
+      <v-col cols="12" md="6">
         <v-card
-          width="400"
-          :class="$vuetify.breakpoint.xs ? 'rounded-0' : 'rounded-lg'"
+          width="500"
+          height="550"
+          style="top: 50%; left: 50%; transform: translate(-50%, -50%)"
+          shaped
         >
           <v-card-text style="width: auto">
             <v-tabs class="d-none" v-model="model"></v-tabs>
@@ -15,7 +17,7 @@
                     alt="Logo"
                     class="shrink app"
                     contain
-                    src="@/assets/Sundae_Logo.png"
+                    src="@/assets/sundae.png"
                     transition="scale-transition"
                     width="250"
                   />
@@ -55,7 +57,7 @@
                   <v-col cols="12" md="10">
                     <v-btn
                       block
-                      color="#1D2939"
+                      color="#3A5A40"
                       style="color: white"
                       @click="Login()"
                       class="rounded-lg"
@@ -84,15 +86,24 @@
             </v-tabs-items>
           </v-card-text>
         </v-card>
-      </v-row>
-    </v-container>
+      </v-col>
+      <v-col cols="12" md="6" v-show="$vuetify.breakpoint.smAndDown == false">
+        <img
+          src="@/assets/building.jpg"
+          alt="welcome"
+          style="width: 100%; height: 100%"
+        />
+      </v-col>
+    </v-row>
 
-    <v-dialog v-model="RegisterDialog" persistent width="900">
+
+    <v-dialog v-model="RegisterDialog" transition="dialog-top-transition" width="900">
       <v-card>
         <v-card-title>
           <v-spacer></v-spacer>
           <v-btn
             icon
+            x-large
             @click="CloseRegisterDialog()"
           >
             <v-icon>mdi-close</v-icon>
@@ -103,9 +114,9 @@
             <v-col cols="12" md="6">
               <div align="left">
                 <v-img
-                  width="290"
+                  width="250"
                   height="auto"
-                  src="@/assets/Sundae_Logo.png"
+                  src="@/assets/sundae.png"
                 ></v-img>
               </div>
             </v-col>
@@ -129,7 +140,7 @@
               <v-btn
                 block
                 x-large
-                color="#1D2939"
+                color="primary"
                 style="color: white"
                 @click="CheckDuplicateUsername(Username_Register)"
                 class="rounded-lg"
@@ -537,5 +548,59 @@ export default {
 }
 .Header_Color {
   font-weight: bold;
+}
+
+.split-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+.split {
+  width: 50%;
+  height: 100%;
+}
+
+.centered-form {
+  width: 100%;
+  max-width: 50px;
+  padding: 20px;
+}
+
+.left {
+  background-color: white;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.right {
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.centered-content {
+  color: white;
+  text-align: center;
+  padding: 2rem;
+}
+
+/* Responsive layout */
+@media only screen and (max-width: 959px) {
+  .split-container {
+    flex-direction: column;
+  }
+  
+  .split {
+    width: 100%;
+  }
+  
+  .right {
+    display: none;
+  }
 }
 </style>
