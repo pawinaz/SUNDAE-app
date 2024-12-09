@@ -15,9 +15,9 @@
         class="shrink app"
         contain
         @click="NavigateToMain()"
-        src="@/assets/sundae.png"
+        src="@/assets/logo-b.png"
         transition="scale-transition"
-        width="100"
+        width="150"
         style="float: left;"
       />
       <p
@@ -40,6 +40,7 @@
             <v-icon color="#126496">mdi-menu-down</v-icon>
           </v-btn>
           <div>
+            <v-icon large color="blue darken-2" left>mdi-account-heart</v-icon>
             <span style="font-size: 18px; color: black; padding-right: 10px">{{
               Username
             }}</span>

@@ -4,7 +4,7 @@
       <v-col cols="12" md="6">
         <v-card
           width="500"
-          height="550"
+          height="480"
           style="top: 50%; left: 50%; transform: translate(-50%, -50%)"
           shaped
         >
@@ -17,9 +17,9 @@
                     alt="Logo"
                     class="shrink app"
                     contain
-                    src="@/assets/sundae.png"
+                    src="@/assets/logo-b.png"
                     transition="scale-transition"
-                    width="250"
+                    width="200"
                   />
                 </div>
                 <br />
