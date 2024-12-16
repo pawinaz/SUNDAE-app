@@ -1,6 +1,6 @@
 <template>
   <v-footer
-    color="primary"
+    :color="themecolor"
     style="margin-top: auto"
     class="text-caption footer-shadow"
   >
@@ -21,11 +21,46 @@
   </v-footer>
 </template>
 <script>
+import axios from "axios";
+import enurl from "@/api/environment";
+// import LoadingComponent from "@/components/Loading";
+// import Swal from "sweetalert2/dist/sweetalert2.js";
+
 export default {
   data() {
-    return {};
+    return {    
+      LoadingDialog: false,
+      url: enurl.apiUrl,
+
+      ConfigDialog:false,
+      themecolor:""
+    };
   },
+
+  mounted: function () {
+    let self = this;
+    self.GetDataConfigFooter()
+  },
+
+  methods:{
+    GetDataConfigFooter(){
+      let self =this;
+      axios
+        .get(`${self.url}Login/GetDataConfigFooter`)
+        .then(function (response) {
+          if (response.data.status == 0) {
+            console.log(response.data.data)
+            self.themecolor = response.data.data.themecolor
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+    }
+  }
 };
+
 </script>
 <style>
 .inline-container {

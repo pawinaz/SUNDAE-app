@@ -4,7 +4,6 @@
       <v-col cols="12" md="6">
         <v-card
           width="500"
-          height="480"
           style="top: 50%; left: 50%; transform: translate(-50%, -50%)"
           shaped
         >
@@ -17,7 +16,8 @@
                     alt="Logo"
                     class="shrink app"
                     contain
-                    src="@/assets/logo-b.png"
+                    :src="logoimage"
+                    @click="OpenConFigDialog()"
                     transition="scale-transition"
                     width="200"
                   />
@@ -57,7 +57,7 @@
                   <v-col cols="12" md="10">
                     <v-btn
                       block
-                      color="primary"
+                      :color="themecolor"
                       style="color: white"
                       @click="Login()"
                       class="rounded-lg"
@@ -116,7 +116,7 @@
                 <v-img
                   width="250"
                   height="auto"
-                  src="@/assets/sundae.png"
+                  :src="logoimage"
                 ></v-img>
               </div>
             </v-col>
@@ -230,6 +230,87 @@
       </v-card>
     </v-dialog>
 
+    <v-dialog v-model="ConfigDialog" transition="dialog-top-transition" width="900">
+      <v-card>
+        <v-card-title>
+          <v-spacer></v-spacer>
+          <v-btn
+            icon
+            x-large
+            @click="CloseConfig()"
+          >
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-text>
+          <!-- <v-row>
+            <v-col cols="12" md="6">
+              <div align="left">
+                <v-img
+                  width="250"
+                  height="auto"
+                  src="@/assets/sundae.png"
+                ></v-img>
+              </div>
+            </v-col>
+          </v-row> -->
+          <v-row>
+            <v-col cols="12" md="6" align="center">
+              <h2 style="font-weight: bold; font-size: 15px; color: text;">Logo Image</h2>
+            <div>
+              <img
+              :src="logoimage"
+              width="270"
+              height="200"
+              />
+            <v-btn
+            color="primary"
+            class="white--text mt-2 text-capitalize"
+            router
+            width="150"
+            @click="onPickFile"
+            >Upload
+            </v-btn>
+            <input
+            style="display:none"
+            ref="fileimagelogo"
+            id="file-upload"
+            accept="image/*"
+            name="file-input"
+            type="file"
+            @change="handleFileInputLogo"
+            />
+            </div>
+            </v-col>
+            <v-col cols="12" md="6" align="center">
+              <h2 style="font-weight: bold; font-size: 15px; color: text;">Theme Color</h2>
+
+              <v-color-picker
+              v-model="themecolor"
+                dot-size="25"
+                mode="hexa"
+                swatches-max-height="200"
+
+              ></v-color-picker>
+
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" md="12" align="center">
+              <v-btn
+                width="250"
+                color="green"
+                class="rounded-lg white--text"
+                x-large
+                @click="SaveConfig()"
+                >Submit</v-btn
+              >
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+
     <v-dialog v-model="LoadingDialog" persistent width="0.01">
       <v-card>
         <v-card-text>
@@ -275,11 +356,17 @@ export default {
       Lastname_Register: "",
       Telephone_Register: "",
       Email_Register: "",
+
+      ConfigDialog:false,
+      logoimage:"",
+      themecolor:""
+
     };
   },
 
   mounted: function () {
     let self = this;
+    self.GetDataConfigLoginPage()
     let isLoggedIn = this.$cookies.get("isLoggedIn");
     if (isLoggedIn == "true") {
       let token = this.$cookies.get("Token");
@@ -457,6 +544,14 @@ export default {
       self.RegisterDialog = false;
     },
 
+
+    CloseConfig() {
+      let self = this;
+      // self.ClearData();
+      self.ConfigDialog = false;
+    },
+    
+
     CheckLoginToken(value) {
       let self = this;
       let temp = {
@@ -497,6 +592,61 @@ export default {
         self.flagPassword = true;
       }
     },
+    OpenConFigDialog(){
+      let self = this;
+      self.ConfigDialog = true;
+    },
+    onPickFile(){
+      let self = this;
+      self.$refs.fileimagelogo.click();
+    },
+
+    handleFileInputLogo(data){
+      let files = data.target.files;
+      files = data.target.files;
+      var reader = new FileReader();
+      reader.readAsDataURL(files[0]);
+      reader.onload = (data) =>{
+        this.logoimage = data.target.result;
+        // this.logoimageName = files[0].name;
+      };
+    },
+    SaveConfig(){
+      let self = this;
+      let temp = {
+        logoimage: self.logoimage,
+        themecolor:self.themecolor,
+      };
+      axios
+        .post(`${self.url}Login/SaveConfigLoginPage`, temp)
+        .then(function (response) {
+          if (response.data.status == 0) {
+            window.location.reload()
+
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    GetDataConfigLoginPage(){
+      let self =this;
+      axios
+        .get(`${self.url}Login/GetDataConfigLoginPage`)
+        .then(function (response) {
+          if (response.data.status == 0) {
+            console.log(response.data.data)
+            self.logoimage = response.data.data.logoimage
+            self.themecolor = response.data.data.themecolor
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+    }
+
+
   },
 };
 </script>
