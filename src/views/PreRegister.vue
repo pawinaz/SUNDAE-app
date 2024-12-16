@@ -243,6 +243,18 @@
                               Submit
                             </v-btn>
                           </v-col>
+                          <v-col cols="12" md="1" align="center">
+                            <v-btn
+                              style="color: white"
+                              height="40"
+                              width="150"
+                              color="red"
+                              @click="BackToManagePreRegister()"
+                            >
+                              Back
+                            </v-btn>
+                            
+                          </v-col>
                           
                         </v-row>
                       </v-card-text>
