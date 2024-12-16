@@ -29,7 +29,7 @@ export default {
   src: local("English"), url(./assets/Font/Kanit-Regular.ttf);
 }
 .v-content__wrap {
-  background-color: #F6F1EE;
+  background-color: primary;
   width: 100%;
   height: 100%;
 }

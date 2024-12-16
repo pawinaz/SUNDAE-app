@@ -8,21 +8,17 @@
               elevation="10"
               style="padding: 2%; margin-top: 0%; margin-bottom: 2%"
             >
-              <v-row align="center" justify="space-between" class="pa-4">
-                <v-col>
+              <!-- <v-row align="center" justify="space-between" class="pa-4"> -->
+              <v-row class="pa-2">
+                <v-col cols="12" sm="7" md="7" lg="7">
                   <div
-                  class="pb-4"
-                  style="font-size: 24px; font-weight: bold; color: #444444">
-                  Pre Register Management
-                </div>
+                    class="pb-4"
+                    style="font-size: 24px; font-weight: bold; color: primary"
+                  >
+                    Pre Register Management
+                  </div>
                 </v-col>
-                <v-col
-                  cols="12"
-                  sm="6"
-                  md="4"
-                  lg="8"
-                  class="d-flex justify-end"
-                >
+                <v-col sm="2" md="2" lg="2" class="d-flex justify-center">
                   <v-text-field
                     v-model="search"
                     label="Search"
@@ -31,30 +27,30 @@
                     clearable
                     outlined
                     dense
-                    class="ma-2"
                     color="primary"
-                    style="max-width: 200px"
                   ></v-text-field>
+                </v-col>
+                <v-col sm="2" md="2" lg="2" class="d-flex justify-center">
                   <v-select
                     v-model="selectedFilter"
                     :items="filterOptions"
                     label="Filter by"
-                    class="ma-2"
                     color="primary"
                     outlined
                     dense
                     @change="applyFilter"
-                    style="max-width: 200px"
                     clearable
                   ></v-select>
+                </v-col>
+                <v-col sm="1" md="1" lg="1" class="d-flex justify-center">
                   <v-btn
                     height="40"
-                    min-width="150"
+                    width="110%"
                     color="primary"
-                    class="ma-2 white--text"
+                    class="white--text"
                     @click="CreatePreRegister()"
-                  >PRE REGISTER
-                  <v-icon right>mdi-plus</v-icon>
+                    >CREATE
+                    <v-icon right>mdi-plus</v-icon>
                   </v-btn>
                 </v-col>
               </v-row>
@@ -64,7 +60,7 @@
                 "
                 :items="filteredListData"
                 hide-default-footer
-                style="color: #332f2fde"
+                style="color: secondary"
                 :items-per-page="itemsPerPage"
                 :mobile-breakpoint="0"
                 :page.sync="page"
@@ -834,5 +830,4 @@ export default {
   flex-direction: column;
   align-items: center;
 }
-
 </style>

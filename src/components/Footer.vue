@@ -1,6 +1,6 @@
 <template>
   <v-footer
-    color="white"
+    color="primary"
     style="margin-top: auto"
     class="text-caption footer-shadow"
   >
@@ -9,10 +9,10 @@
         <div class="py-2 inline-container">
           <v-img
             class="inline-item"
-            src="@/assets/fs.svg"
+            src="@/assets/fs-white-removebg-preview.png"
             width="80"
           ></v-img>
-          <span class="inline-item copyright-text" style="color:black" > 
+          <span class="inline-item copyright-text" style="color:text" > 
             Copyright © 2024 Forward System Co. Ltd.
           </span>
         </div>
@@ -40,7 +40,7 @@ export default {
 .copyright-text {
   font-size: 0.875rem;
   margin-bottom: 0;
-  color: #fff8f8;
+  color: text;
   padding-left: 15px;
 }
 

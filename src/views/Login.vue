@@ -57,7 +57,7 @@
                   <v-col cols="12" md="10">
                     <v-btn
                       block
-                      color="#3A5A40"
+                      color="primary"
                       style="color: white"
                       @click="Login()"
                       class="rounded-lg"

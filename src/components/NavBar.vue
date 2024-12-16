@@ -1,6 +1,6 @@
 <template>
-  <nav style="z-index: 3; background-color: white;">
-    <v-toolbar color="white" height="60">
+  <nav style="z-index: 3; background-color: white">
+    <v-toolbar color="primary" height="60">
       <!-- <v-img
         alt="Logo"
         class="shrink app"
@@ -18,7 +18,7 @@
         src="@/assets/sundae.png"
         transition="scale-transition"
         width="100"
-        style="float: left;"
+        style="float: left"
       />
       <p
         v-show="!$vuetify.breakpoint.smAndDown"
@@ -30,17 +30,35 @@
           cursor: default;
           float: left;
         "
-      >
-      </p>
+      ></p>
+
+      <!-- <v-menu offset-y>
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn color="" dark v-bind="attrs" v-on="on">
+            Dropdown
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item v-for="(item, index) in items" :key="index">
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu> -->
+
+      <v-btn icon @click="toggleTheme">
+        <v-icon :color="isDarkTheme ? 'yellow darken-3' : 'blue-grey darken-4'">
+          {{ isDarkTheme ? "mdi-lightbulb-outline" : "mdi-lightbulb" }}
+        </v-icon>
+      </v-btn>
 
       <v-spacer></v-spacer>
       <v-menu offset-y>
         <template v-slot:activator="{ on: menu }">
           <v-btn icon v-on="{ ...menu }">
-            <v-icon color="#126496">mdi-menu-down</v-icon>
+            <v-icon color="text">mdi-menu-down</v-icon>
           </v-btn>
           <div>
-            <span style="font-size: 18px; color: black; padding-right: 10px">{{
+            <span style="font-size: 18px; color: text; padding-right: 10px">{{
               Username
             }}</span>
           </div>
@@ -157,6 +175,8 @@ export default {
       Username: this.$cookies.get("Username"),
       StatusAdmin: false,
 
+      isDarkTheme: this.$vuetify.theme.dark,
+
       EditUserDialog: false,
       flagOldPassword: false,
       flagPassword: false,
@@ -207,7 +227,7 @@ export default {
       self.GetDataUserByToken(token);
     },
 
-    ManageRole(){
+    ManageRole() {
       let self = this;
       self.$router.push("/ManageRole");
     },
@@ -243,20 +263,20 @@ export default {
         });
     },
 
-    ChangePassword(){
+    ChangePassword() {
       let self = this;
-      if(self.EditPassword != self.EditConfirmPassword){
+      if (self.EditPassword != self.EditConfirmPassword) {
         Swal.fire({
-            icon: "error",
-            title: "Error...",
-            width: 900,
-            text: "กรุณากรอก Password ให้ถูกต้องและตรงกัน",
-          });
+          icon: "error",
+          title: "Error...",
+          width: 900,
+          text: "กรุณากรอก Password ให้ถูกต้องและตรงกัน",
+        });
       }
       self.LoadingDialog = true;
       let temp = {
         oldPassword: self.EditOldPassword,
-        newPassword: self.EditPassword
+        newPassword: self.EditPassword,
       };
       axios
         .post(`${self.url}Login/ChangePassword`, temp)
@@ -334,6 +354,11 @@ export default {
       }
     },
 
+    toggleTheme() {
+      this.isDarkTheme = !this.isDarkTheme;
+      this.$vuetify.theme.dark = this.isDarkTheme;
+    },
+
     Logout() {
       let self = this;
       self.$store
@@ -370,9 +395,7 @@ export default {
   font-family: "Roboto", sans-serif;
   font-size: 20px !important;
 }
-.mdi-menu-down::before {
-  color: black;
-}
+
 .white-color {
   background-color: red;
   color: red;

@@ -17,6 +17,7 @@ export default new Vuetify({
           accent: '#A2AEBB', // Cadet Gray
           error: '#FF5252', // สีแดงสำหรับ Error
           background: '#DFE0E2', // Platinum (สีพื้นหลังหลัก)
+          text:'#000000'
         },
         dark: {
           primary: '#071013', // Rich Black
@@ -24,6 +25,7 @@ export default new Vuetify({
           accent: '#75ABBC', // Moonstone สำหรับไฮไลต์
           error: '#FF5252', // สีแดงสำหรับ Error
           background: '#212121', // สีดำเจ็ท
+          text:'#ffffff'
         },
           
       },

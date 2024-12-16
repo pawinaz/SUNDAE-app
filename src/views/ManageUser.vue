@@ -12,7 +12,7 @@
                 <v-col>
                   <div
                 class="pb-4"
-                style="font-size: 24px; font-weight: bold; color: #444444"
+                style="font-size: 24px; font-weight: bold; color: primary"
               >
                 User Management
               </div>
@@ -42,7 +42,7 @@
                 "
                 :items="ListData"
                 hide-default-footer
-                style="color: #332f2fde"
+                style="color: primary"
                 :items-per-page="itemsPerPage"
                 :mobile-breakpoint="0"
                 :page.sync="page"

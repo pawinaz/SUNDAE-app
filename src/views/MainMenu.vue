@@ -27,7 +27,7 @@
                   <div class="menu-header">
                     <h3 class="menu-title">{{ item.name }}</h3>
                     <v-avatar size="40" class="menu-icon">
-                      <v-icon color="white" >
+                      <v-icon color="text" >
                         {{ getMenuIcon(item.name) }}
                       </v-icon>
                     </v-avatar>
@@ -91,7 +91,7 @@
   border-radius: 16px ;
   overflow: hidden;
   transition: all 0.3s ease;
-  background: #A3B18A ;
+  background: primary;
   display: flex;
   flex-direction: column;
 }
@@ -123,7 +123,7 @@
 .menu-title {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #ffffff;
+  color: text;
   margin: 0;
 }
 
@@ -134,7 +134,7 @@
 }
 
 .menu-description {
-  color: #ffffff;
+  color: text;
   font-size: 1rem;
   line-height: 1.5;
   margin-bottom: 15px;
