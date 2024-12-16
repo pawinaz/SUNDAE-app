@@ -33,9 +33,9 @@
                       : { marginTop: '3%' }
                   "
                 >
-                  <v-icon @click="BackToManagePreRegister()" size="45"
-                    >mdi-arrow-left-bold-circle-outline</v-icon
-                  >&nbsp;
+                  <!-- <v-icon @click="BackToManagePreRegister()" size="45" -->
+                    <!-- >mdi-arrow-left-bold-circle-outline</v-icon -->
+                  
                   <p
                     style="
                       text-align: center;

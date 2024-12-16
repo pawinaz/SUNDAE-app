@@ -15,9 +15,9 @@
         class="shrink app"
         contain
         @click="NavigateToMain()"
-        src="@/assets/logo-b.png"
+        src="@/assets/sundae.png"
         transition="scale-transition"
-        width="150"
+        width="100"
         style="float: left;"
       />
       <p
