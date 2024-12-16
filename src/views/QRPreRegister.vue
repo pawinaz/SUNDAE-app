@@ -35,12 +35,19 @@
                     alt="Logo"
                     class="shrink app"
                     contain
-                    src="@/assets/Sundae_Logo.png"
+                    src="@/assets/sundae.png"
                     transition="scale-transition"
                     width="250"
                   />
                 </div>
-                <p style="font-size: 20px; font-weight: bold; color: black">
+                <p
+                  style="
+                    font-size: 20px;
+                    font-weight: bold;
+                    color: text;
+                    margin-top: 10px;
+                  "
+                >
                   {{ visitorName }}
                 </p>
                 <qrcode-vue
@@ -48,37 +55,69 @@
                   :value="QRvalue"
                   :size="QRsize"
                   level="M"
+                  style="background-color: white; padding: 2%; width: 300px; display: flex; justify-content: center;"
                 ></qrcode-vue>
                 <p
                   class="mt-10"
-                  style="font-size: 18px; font-weight: bold; color: black"
+                  style="font-size: 18px; font-weight: bold; color: text"
                 >
                   {{ Detail }}
                 </p>
                 <p
                   class="mt-10"
-                  style="font-size: 18px; font-weight: bold; color: black"
+                  style="font-size: 18px; font-weight: bold; color: text"
                 >
                   {{ CreateTime }}
                 </p>
+                <!-- <v-btn
+                  height="40"
+                  width="150"
+                  color="indigo"
+                  class="white--text mt-2"
+                  @click="copyURL()"
+                >
+                  Copy Link
+                </v-btn>
+                <v-btn  height="40"
+                  width="150"
+                  color="red"
+                  class="white--text mt-2"
+                  @click="goToManagePreRegister"
+                >
+                  ย้อนกลับ
+                </v-btn> -->
+              </v-col>
+              <v-col cols="12" md="12" align="center">
                 <v-btn
-                    height="40"
-                    width="150"
-                    color="indigo"
-                    class="white--text mt-2"
-                    @click="copyURL()"
-                  >
-                    Copy Link
-                  </v-btn>
+                  height="40"
+                  width="150"
+                  color="indigo"
+                  class="white--text mt-2"
+                  @click="copyURL()"
+                >
+                  Copy Link
+                </v-btn>
+
+                {{ edit_1 }}
+                <v-btn
+                  height="40"
+                  width="150"
+                  color="red"
+                  class="white--text mt-2"
+                  style="margin-top: 10px"
+                  @click="goToManagePreRegister"
+                >
+                  Back
+                </v-btn>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="12" md="12" align="center">
                 <div>
-                  <span style="font-size: 16px; color: black">
+                  <span style="font-size: 16px; color: text">
                     Refresh In : </span
                   ><span
-                    style="font-size: 16px; font-weight: bold; color: black;"
+                    style="font-size: 16px; font-weight: bold; color: text"
                     >{{ TextTime }}</span
                   >
                 </div>
@@ -110,7 +149,7 @@
     </v-dialog>
   </div>
 </template>
-    
+
 <script>
 import axios from "axios";
 import enurl from "@/api/environment";
@@ -234,9 +273,10 @@ export default {
         strTime
       );
     },
+    goToManagePreRegister() {
+      this.$router.push({ name: "ManagePreRegister" });
+    },
   },
 };
 </script>
-<style scoped>
-</style>
-    
+<style scoped></style>

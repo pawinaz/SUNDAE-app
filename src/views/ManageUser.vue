@@ -32,7 +32,7 @@
                     clearable
                     outlined
                     dense
-                    color="primary"
+                    color="secondary"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -123,7 +123,7 @@
                         </span>
                       </v-btn>
                     </td>
-                    <td style="text-align: center">
+                    <td style="text-align: center; display: flex; align-items: center; justify-content: center;">
                       <template>
                         <v-btn
                           :disabled="!item.active"
@@ -189,14 +189,14 @@
                     </td>
                     <td class="header-table-css">{{ item.email }}</td>
                     <td class="header-table-css">{{ item.roleName }}</td>
-                    <td style="text-align: center">
+                    <td style="text-align: center; display: flex; align-items: center; justify-content: center;">
                       <v-btn
                         class="mx-2"
                         fab
                         dark
                         small
                         icon
-                        color="moonstone"
+                        color="orange"
                         @click="
                           OpenUserDetailDialog(item.userID, item.statusUse)
                         "
@@ -254,7 +254,7 @@
                     :total-visible="20"
                     :length="pageCount"
                     @input="ChangePage(page)"
-                    color="primary"
+                    color="secondary"
                   ></v-pagination>
                 </v-col>
                 <v-col cols="12" md="3"></v-col>
@@ -1234,7 +1234,7 @@ export default {
 </script>
 <style scoped>
 * >>> .v-data-table-header {
-  background-color: #071013;
+  background-color: #383E40;
   color: #ffffff !important;
 }
 * >>> .v-data-table-header th {

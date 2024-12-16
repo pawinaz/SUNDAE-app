@@ -8,201 +8,201 @@
               elevation="10"
               style="padding: 2%; margin-top: 0%; margin-bottom: 2%"
             >
-            <v-row align="center" justify="end" class="pa-4">
-              <v-col>
-                <div
-                class="pb-4"
-                style="font-size: 24px; font-weight: bold; color: primary"
-            >
-              Manage Role
-            </div>
-              </v-col>
-              <v-col
+              <v-row align="center" justify="end" class="pa-4">
+                <v-col>
+                  <div
+                    class="pb-4"
+                    style="font-size: 24px; font-weight: bold; color: primary"
+                  >
+                    Manage Role
+                  </div>
+                </v-col>
+                <v-col
                   cols="10"
                   sm="6"
                   md="4"
                   lg="4"
                   class="d-flex justify-end"
                 >
-                <v-text-field
-                  label="Search"
-                  append-icon="mdi-magnify"
-                  v-model="search"
-                  v-on:keyup.enter="SearchDataRoleList(search)"
-                  class="ma-2"
-                  color="primary"
-                  clearable
-                  outlined
-                  dense
-                ></v-text-field>
-                <v-btn
-                  color="primary"
-                  class="ma-2 white--text"
-                  @click="OpenAddRoleDetailDialog()"
-                  >Create
-                  <v-icon right>mdi-plus</v-icon>
-                </v-btn>
-              </v-col>
-            </v-row>
-            <v-data-table
-              :headers="
-                $vuetify.breakpoint.smAndDown ? headersMobile : headers
-              "
-              :items="ListData"
-              hide-default-footer
-              style="color: primary"
-              :items-per-page="itemsPerPage"
-              :mobile-breakpoint="0"
-              :page.sync="page"
-              single-line
-              hide-details
-            >
-              <template
-                v-if="!$vuetify.breakpoint.smAndDown"
-                v-slot:item="{ item, index }"
+                  <v-text-field
+                    label="Search"
+                    append-icon="mdi-magnify"
+                    v-model="search"
+                    v-on:keyup.enter="SearchDataRoleList(search)"
+                    class="ma-2"
+                    color="secondary"
+                    clearable
+                    outlined
+                    dense
+                  ></v-text-field>
+                  <v-btn
+                    color="secondary"
+                    class="ma-2 white--text"
+                    @click="OpenAddRoleDetailDialog()"
+                    >Create
+                    <v-icon right>mdi-plus</v-icon>
+                  </v-btn>
+                </v-col>
+              </v-row>
+              <v-data-table
+                :headers="
+                  $vuetify.breakpoint.smAndDown ? headersMobile : headers
+                "
+                :items="ListData"
+                hide-default-footer
+                style="color: primary"
+                :items-per-page="itemsPerPage"
+                :mobile-breakpoint="0"
+                :page.sync="page"
+                single-line
+                hide-details
               >
-                <tr>
-                  <td class="header-table-css">{{ no_run + (index + 1) }}</td>
-                  <td class="header-table-css">{{ item.roleName }}</td>
-                  <td class="header-table-css">{{ item.remark }}</td>
-                  <td class="header-table-css">
-                    {{ ChangeFormatDate(item.createTime) }}
-                  </td>
-                  <td class="header-table-css">
-                    {{ ChangeFormatDate(item.updateTime) }}
-                  </td>
-                  <td
-                    style="
-                      padding-bottom: 5px;
-                      display: flex;
-                      flex-direction: column-reverse;
-                      align-items: center;
-                    "
-                  >
-                  <v-btn
-                      :color="GetColor(item.active)"
-                      rounded
-                      icon
-                      class="text-capitalize"
-                      style="pointer-events: none"
-                      depressed
+                <template
+                  v-if="!$vuetify.breakpoint.smAndDown"
+                  v-slot:item="{ item, index }"
+                >
+                  <tr>
+                    <td class="header-table-css">{{ no_run + (index + 1) }}</td>
+                    <td class="header-table-css">{{ item.roleName }}</td>
+                    <td class="header-table-css">{{ item.remark }}</td>
+                    <td class="header-table-css">
+                      {{ ChangeFormatDate(item.createTime) }}
+                    </td>
+                    <td class="header-table-css">
+                      {{ ChangeFormatDate(item.updateTime) }}
+                    </td>
+                    <td style="text-align: center">
+                      <v-btn
+                        :color="GetColor(item.active)"
+                        rounded
+                        icon
+                        class="text-capitalize"
+                        style="pointer-events: none"
+                        depressed
+                      >
+                        <span :style="{ color: GetColorText(item.active) }">
+                          {{ item.active == true ? "active" : "Inactive" }}
+                        </span>
+                      </v-btn>
+                    </td>
+                    <td
+                      style="
+                        text-align: center;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                      "
                     >
-                      <span :style="{ color: GetColorText(item.active) }">
-                        {{ item.active == true ? "active" : "Inactive" }}
-                      </span>
-                    </v-btn>
-                  </td>
-                  <td style="text-align: center">
-                    <v-btn
-                      class="mx-2"
-                      fab
-                      dark
-                      small
-                      icon
-                      color="orange"
-                      @click="OpenRoleDetailDialog(item.roleID)"
-                    >
-                      <v-icon dark> mdi-pencil-outline </v-icon>
-                    </v-btn>
-                    <template>
                       <v-btn
                         class="mx-2"
                         fab
                         dark
                         small
                         icon
-                        color="red"
-                        @click="InActiveRole(item.roleID)"
+                        color="orange"
+                        @click="OpenRoleDetailDialog(item.roleID)"
                       >
-                        <v-icon dark>mdi-trash-can-outline </v-icon>
+                        <v-icon dark> mdi-pencil-outline </v-icon>
                       </v-btn>
-                    </template>
-                  </td>
-                </tr>
-              </template>
-              <template v-else v-slot:item="{ item, index }">
-                <tr>
-                  <td class="header-table-css">{{ no_run + (index + 1) }}</td>
-                  <td class="header-table-css">{{ item.roleName }}</td>
-                  <td
-                    style="
-                      padding-bottom: 5px;
-                      display: flex;
-                      flex-direction: column-reverse;
-                      align-items: center;
-                    "
-                  >
-                  <v-btn
-                      :color="GetColor(item.active)"
-                      rounded
-                      icon
-                      class="text-capitalize"
-                      style="pointer-events: none"
-                      depressed
+                      <template>
+                        <v-btn
+                          class="mx-2"
+                          fab
+                          dark
+                          small
+                          icon
+                          color="red"
+                          @click="InActiveRole(item.roleID)"
+                        >
+                          <v-icon dark>mdi-trash-can-outline </v-icon>
+                        </v-btn>
+                      </template>
+                    </td>
+                  </tr>
+                </template>
+                <template v-else v-slot:item="{ item, index }">
+                  <tr>
+                    <td class="header-table-css">{{ no_run + (index + 1) }}</td>
+                    <td class="header-table-css">{{ item.roleName }}</td>
+                    <td style="text-align: center">
+                      <v-btn
+                        :color="GetColor(item.active)"
+                        rounded
+                        icon
+                        class="text-capitalize"
+                        style="pointer-events: none"
+                        depressed
+                      >
+                        <span :style="{ color: GetColorText(item.active) }">
+                          {{ item.active == true ? "active" : "Inactive" }}
+                        </span>
+                      </v-btn>
+                    </td>
+                    <td
+                      style="
+                        text-align: center;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                      "
                     >
-                      <span :style="{ color: GetColorText(item.active) }">
-                        {{ item.active == true ? "active" : "Inactive" }}
-                      </span>
-                    </v-btn>
-                  </td>
-                  <td style="text-align: center">
-                    <v-btn
-                      class="mx-2"
-                      fab
-                      dark
-                      small
-                      icon
-                      color="orange"
-                      @click="OpenRoleDetailDialog(item.roleID)"
-                    >
-                      <v-icon dark> mdi-pencil-outline </v-icon>
-                    </v-btn>
-                    <template>
                       <v-btn
                         class="mx-2"
                         fab
                         dark
                         small
                         icon
-                        color="red"
-                        @click="InActiveRole(item.roleID)"
+                        color="orange"
+                        @click="OpenRoleDetailDialog(item.roleID)"
                       >
-                        <v-icon dark>mdi-trash-can-outline </v-icon>
+                        <v-icon dark> mdi-pencil-outline </v-icon>
                       </v-btn>
-                    </template>
-                  </td>
-                </tr>
-              </template>
-            </v-data-table>
-            <br />
-            <v-row class="mt-5">
-              <v-col cols="12" md="4"></v-col>
-              <v-col cols="12" md="3">
-                <v-pagination
-                  v-model="page"
-                  :total-visible="20"
-                  :length="pageCount"
-                  color="primary"
-                  @input="ChangePage(page)"
-                ></v-pagination>
-              </v-col>
-              <v-col cols="12" md="3"></v-col>
-              <v-col cols="12" md="2">
-                <v-autocomplete
-                  dense
-                  solo
-                  v-model="itemsPerPage"
-                  @input="ChangePerPage(itemsPerPage)"
-                  :items="items"
-                  label="10/page"
-                ></v-autocomplete>
-              </v-col>
-            </v-row>
-          </v-card>
-        </div>
-      </v-card-text>
-    </div>
-  </v-card>
+                      <template>
+                        <v-btn
+                          class="mx-2"
+                          fab
+                          dark
+                          small
+                          icon
+                          color="red"
+                          @click="InActiveRole(item.roleID)"
+                        >
+                          <v-icon dark>mdi-trash-can-outline </v-icon>
+                        </v-btn>
+                      </template>
+                    </td>
+                  </tr>
+                </template>
+              </v-data-table>
+              <br />
+              <v-row class="mt-5">
+                <v-col cols="12" md="4"></v-col>
+                <v-col cols="12" md="3">
+                  <v-pagination
+                    v-model="page"
+                    :total-visible="20"
+                    :length="pageCount"
+                    color="secondary"
+                    @input="ChangePage(page)"
+                  ></v-pagination>
+                </v-col>
+                <v-col cols="12" md="3"></v-col>
+                <v-col cols="12" md="2">
+                  <v-autocomplete
+                    dense
+                    solo
+                    v-model="itemsPerPage"
+                    @input="ChangePerPage(itemsPerPage)"
+                    :items="items"
+                    label="10/page"
+                  ></v-autocomplete>
+                </v-col>
+              </v-row>
+            </v-card>
+          </div>
+        </v-card-text>
+      </div>
+    </v-card>
 
     <v-dialog v-model="RoleDetailDialog" persistent width="800">
       <v-card>
@@ -254,7 +254,7 @@
           <v-row>
             <v-col cols="12" md="3">
               <v-checkbox
-                color="primary"
+                color="text"
                 label="Redemption"
                 v-model="RedemptionStatus"
                 hide-details
@@ -352,7 +352,7 @@
     </v-dialog>
   </div>
 </template>
-  
+
 <script>
 import axios from "axios";
 import enurl from "@/api/environment";
@@ -732,7 +732,7 @@ export default {
       let self = this;
       if (id != 0) {
         let temp = {
-          roleID: id
+          roleID: id,
         };
         axios
           .post(`${self.url}Management/inActiveRoleByRoleID`, temp)
@@ -796,9 +796,9 @@ export default {
   },
 };
 </script>
-  <style scoped>
+<style scoped>
 * >>> .v-data-table-header {
-  background-color: #071013;
+  background-color: #383E40;
   color: #ffffff !important;
 }
 * >>> .v-data-table-header th {
@@ -865,4 +865,3 @@ export default {
   animation-delay: -0.9s;
 }
 </style>
-  

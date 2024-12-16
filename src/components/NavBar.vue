@@ -50,6 +50,11 @@
           {{ isDarkTheme ? "mdi-lightbulb-outline" : "mdi-lightbulb" }}
         </v-icon>
       </v-btn>
+      <!-- <v-btn icon @click="toggleTheme" style="float: right">
+        <v-icon :color="isDarkTheme ? 'yellow darken-3' : 'blue-grey darken-4'">
+          {{ isDarkTheme ? "mdi-lightbulb-outline" : "mdi-lightbulb" }}
+        </v-icon>
+      </v-btn> -->
 
       <v-spacer></v-spacer>
       <v-menu offset-y>
@@ -83,7 +88,7 @@
         </v-list>
       </v-menu>
     </v-toolbar>
-
+    
     <v-dialog v-model="EditUserDialog" persistent width="800">
       <v-card>
         <v-card-title>
@@ -100,7 +105,7 @@
         <v-card-text>
           <v-row class="ml-5 mr-2">
             <v-col cols="12" md="6">
-              <p style="font-size: 13px; color: black">Username</p>
+              <p class="text-password">Username</p>
               <v-text-field
                 disabled
                 outlined
@@ -109,7 +114,7 @@
               />
             </v-col>
             <v-col cols="12" md="6">
-              <p style="font-size: 13px; color: black">Old Password</p>
+              <p class="text-password">Old Password</p>
               <v-text-field
                 outlined
                 placeholder="Old Password"
@@ -123,7 +128,7 @@
           </v-row>
           <v-row class="ml-5 mr-2">
             <v-col cols="12" md="6">
-              <p style="font-size: 13px; color: black">New Password</p>
+              <p class="text-password">New Password</p>
               <v-text-field
                 outlined
                 placeholder="New Password"
@@ -135,7 +140,7 @@
               />
             </v-col>
             <v-col cols="12" md="6">
-              <p style="font-size: 13px; color: black">Confirm Password</p>
+              <p class="text-password">Confirm Password</p>
               <v-text-field
                 outlined
                 placeholder="Confirm Password"
@@ -412,5 +417,9 @@ export default {
 }
 .v-toolbar {
   background-color: white !important;
+}
+
+.text-password {
+  font-size: 13px;
 }
 </style>

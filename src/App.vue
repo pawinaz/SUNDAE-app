@@ -1,13 +1,13 @@
 <template>
   <v-app>
     <NavBar v-if="$route.path == '/Main' || $route.path == '/MainMenu' || $route.path == '/ManagePreRegister' || $route.path == '/ManageUser' || $route.path == '/ManageRole'
-    || $route.path == '/MyQR'  || $route.path == '/CallLift' || $route.path == '/ParkingInformation' || $route.path == '/PreRegister' || $route.path == '/Redemption'" />
+    || $route.path == '/MyQR'  || $route.path == '/CallLift' || $route.path == '/ParkingInformation' || $route.path == '/PreRegister' || $route.path == '/Redemption' || $route.path.startsWith('/QRPreRegister')"/>
     <v-content>
       <div>
         <router-view></router-view>
       </div>
     </v-content>
-    <Footer />
+    <Footer></Footer>
   </v-app>
 </template>
 
@@ -26,7 +26,7 @@ export default {
 <style>
 @font-face {
   font-family: "English";
-  src: local("English"), url(./assets/Font/Kanit-Regular.ttf);
+  src: local("English"), url(./assets/Font/Roboto-Regular.ttf);
 }
 .v-content__wrap {
   background-color: primary;
@@ -36,7 +36,7 @@ export default {
 
 @media only screen and (max-width: 959px) {
   .v-content__wrap {
-    background-color: #ffffff;
+    background-color: primary;
     width: 80%;
   }
 }

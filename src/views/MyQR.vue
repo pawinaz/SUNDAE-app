@@ -42,7 +42,7 @@
                 </div>
                 <p
                   class="mt-5"
-                  style="font-size: 25px; font-weight: bold; color: black"
+                  style="font-size: 25px; font-weight: bold; color: text"
                 >
                   {{ Username }}
                 </p>
@@ -51,21 +51,34 @@
                   :value="QRvalue"
                   :size="QRsize"
                   level="M"
+                  style="background-color: white; padding: 2%; width: 300px; display: flex; justify-content: center;"
                 ></qrcode-vue>
                 <p
                   class="mt-10"
-                  style="font-size: 18px; font-weight: bold; color: black"
+                  style="font-size: 18px; font-weight: bold; color: text"
                 >
                   {{ ChangeFormatDate(CreateTime) }}
                 </p>
                 <div class="mt-10">
-                  <span style="font-size: 16px; color: black">
+                  <span style="font-size: 16px; color: text">
                     Refresh In : </span
                   ><span
-                    style="font-size: 16px; font-weight: bold; color: black"
+                    style="font-size: 16px; font-weight: bold; color: text"
                     >{{ TextTime }}</span
                   >
                 </div>
+              </v-col>
+              <v-col cols="12" md="12" align="center">
+      
+              <v-btn
+                height="40"
+                width="150"
+                color="red"
+                class="white--text mt-2"
+                @click="goToManagePreRegister"
+              >
+                Back
+              </v-btn>
               </v-col>
             </v-row>
           </div>
@@ -172,6 +185,9 @@ export default {
         "  " +
         strTime
       );
+    },
+    goToManagePreRegister() {
+      this.$router.push({ name: 'MainMenu' });
     },
   },
 };

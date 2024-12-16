@@ -279,7 +279,7 @@ export default {
 }
 @font-face {
   font-family: "English";
-  src: local("English"), url(../assets/Font/Kanit-Regular.ttf);
+  src: local("English"), url(../assets/Font/Roboto-Regular.ttf);
 }
 * >>> .v-data-table-header {
   background-color: #333333 !important;

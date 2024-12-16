@@ -46,7 +46,7 @@
                   <v-btn
                     height="40"
                     width="110%"
-                    color="primary"
+                    color="secondary"
                     class="white--text"
                     @click="CreatePreRegister()"
                     >CREATE
@@ -60,7 +60,6 @@
                 "
                 :items="filteredListData"
                 hide-default-footer
-                style="color: secondary"
                 :items-per-page="itemsPerPage"
                 :mobile-breakpoint="0"
                 :page.sync="page"
@@ -218,7 +217,7 @@
                     :total-visible="20"
                     :length="pageCount"
                     @input="ChangePage(page)"
-                    color="primary"
+                    color="secondary"
                   ></v-pagination>
                 </v-col>
                 <v-col cols="12" md="3"></v-col>
@@ -698,7 +697,8 @@ export default {
     },
 
     ShowQRPreRegister(data) {
-      window.open("QRPreRegister/" + data, "_blank");
+      // window.open("QRPreRegister/" + data, "_blank");
+      this.$router.push("QRPreRegister/" + data);
     },
 
     GetColor(value) {
@@ -741,13 +741,11 @@ export default {
 </script>
 <style scoped>
 * >>> .v-data-table-header {
-  background-color: #071013;
+  background-color: #383E40;
   color: #ffffff !important;
-  font-weight: bold;
 }
-
 * >>> .v-data-table-header th {
-  font-size: 16px !important;
+  font-size: 14px !important;
   color: #ffffff !important;
 }
 

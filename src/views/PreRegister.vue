@@ -33,14 +33,15 @@
                       : { marginTop: '3%' }
                   "
                 >
-                  <v-icon @click="BackToManagePreRegister()" size="45"
-                    >mdi-arrow-left-bold-circle-outline</v-icon
-                  >&nbsp;
+                  <!-- <v-btn @click="BackToManagePreRegister()" color="primary" style="margin-right: 10px">
+                      <v-icon left>mdi-arrow-left-bold-circle-outline</v-icon>
+                      ย้อนกลับ
+                  </v-btn> -->
                   <p
                     style="
                       text-align: center;
                       font-size: 22px;
-                      color: #14223c;
+                      color: primary;
                       padding-top: 1rem;
                     "
                   >
@@ -242,6 +243,7 @@
                               Submit
                             </v-btn>
                           </v-col>
+                          
                         </v-row>
                       </v-card-text>
                     </v-card>

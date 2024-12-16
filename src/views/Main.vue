@@ -32,17 +32,17 @@
                 cols="12"
                 md="12"
                 align="center"
-                style="font-size: 22px; color: #14223c"
+                style="font-size: 22px; color: text"
               >
                 <p>Parking Redemption</p>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="12" md="12">
-                <v-tabs>
+                <v-tabs color="secendary">
                   <v-tab @click="ChangeTab('Search')">Search</v-tab>
                   <v-tab @click="ChangeTab('QR')">Scan QRCode</v-tab>
-                  <v-tabs-slider :color="ColorTab"></v-tabs-slider>
+                  <v-tabs-slider color="secondary"></v-tabs-slider>
                   <v-tab-item>
                     <v-card
                       flat
@@ -54,7 +54,7 @@
                     >
                       <v-card-text>
                         <v-row cols="12" md="12" justify="center">
-                          <v-col cols="12" md="6">
+                          <v-col cols="12" md="6" color="text">
                             <p class="TitleCSS">Please Input</p>
                             <v-text-field
                               placeholder="License Number./Ticket Number./Log Id."
@@ -76,7 +76,7 @@
                               height="40"
                               width="150"
                               outlined
-                              color="indigo"
+                              color="text"
                               @click="SearchParking()"
                             >
                               Search
@@ -129,7 +129,7 @@
         <v-card-text>
           <v-row>
             <v-col cols="12" md="12" align="center">
-              <p style="font-size: 20px; color: black">กรุณาระบุทะเบียนรถ</p>
+              <p style="font-size: 20px; color: text">กรุณาระบุทะเบียนรถ</p>
               <v-text-field
                 placeholder="LicensePlate"
                 label="License Plate"
@@ -240,8 +240,8 @@ export default {
       destroy: false,
       Status: false,
       response: "",
-      ColorTab: "#126496",
-      ColorText: "#126496",
+      ColorTab: "secondary",
+      ColorText: "secondary",
       ColorText2: "",
       UpdateLicensePlateDialog: false,
       UpdateLicensePlateDialogFromScan: false,
@@ -522,11 +522,11 @@ export default {
 .TitleCSS {
   font-size: 18px;
   font-weight: 300;
-  color: black;
+  color: primary;
 }
 @font-face {
   font-family: "English";
-  src: local("English"), url(../assets/Font/Kanit-Regular.ttf);
+  src: local("English"), url(../assets/Font/Roboto-Regular.ttf);
 }
 * >>> .v-data-table-header {
   background-color: #333333 !important;

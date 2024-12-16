@@ -20,8 +20,8 @@ export default new Vuetify({
           text:'#000000'
         },
         dark: {
-          primary: '#071013', // Rich Black
-          secondary: '#23B5D3', // Pacific Cyan (สามารถใช้เป็น Secondary)
+          primary: '#071013', // Rich Black 
+          secondary: '#23B5D3', // Pacific Cyan (สามารถใช้เป็น Secondary) 
           accent: '#75ABBC', // Moonstone สำหรับไฮไลต์
           error: '#FF5252', // สีแดงสำหรับ Error
           background: '#212121', // สีดำเจ็ท
