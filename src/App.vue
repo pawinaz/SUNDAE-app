@@ -29,7 +29,7 @@ export default {
   src: local("English"), url(./assets/Font/Roboto-Regular.ttf);
 }
 .v-content__wrap {
-  background-color: primary;
+  background-color: #F6F1EE;
   width: 100%;
   height: 100%;
 }
