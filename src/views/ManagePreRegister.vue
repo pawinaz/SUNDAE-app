@@ -34,7 +34,7 @@
                   <v-select
                     v-model="selectedFilter"
                     :items="filterOptions"
-                    label="Filter by"
+                    label="Status"
                     color="primary"
                     outlined
                     dense

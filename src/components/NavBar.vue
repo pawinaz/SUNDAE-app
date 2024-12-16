@@ -32,30 +32,7 @@
         "
       ></p>
 
-      <!-- <v-menu offset-y>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn color="" dark v-bind="attrs" v-on="on">
-            Dropdown
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item v-for="(item, index) in items" :key="index">
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu> -->
-
-      <v-btn icon @click="toggleTheme">
-        <v-icon :color="isDarkTheme ? 'yellow darken-3' : 'blue-grey darken-4'">
-          {{ isDarkTheme ? "mdi-lightbulb-outline" : "mdi-lightbulb" }}
-        </v-icon>
-      </v-btn>
-      <!-- <v-btn icon @click="toggleTheme" style="float: right">
-        <v-icon :color="isDarkTheme ? 'yellow darken-3' : 'blue-grey darken-4'">
-          {{ isDarkTheme ? "mdi-lightbulb-outline" : "mdi-lightbulb" }}
-        </v-icon>
-      </v-btn> -->
-
+     
       <v-spacer></v-spacer>
       <v-menu offset-y>
         <template v-slot:activator="{ on: menu }">
@@ -63,7 +40,14 @@
             <v-icon color="text">mdi-menu-down</v-icon>
           </v-btn>
           <div>
-            <span style="font-size: 18px; color: black; padding-right: 10px">{{
+            <v-btn icon @click="toggleTheme">
+            <v-icon :color="isDarkTheme ? 'yellow darken-3' : 'blue-grey darken-4'">
+              {{ isDarkTheme ? "mdi-lightbulb-outline" : "mdi-lightbulb" }}
+            </v-icon>
+          </v-btn>
+          <v-icon color="text" left>mdi-account-heart</v-icon>
+   
+            <span style="font-size: 18px; color: text; padding-right: 10px">{{
               Username
             }}</span>
           </div>
