@@ -12,8 +12,9 @@
             src="@/assets/fs-white-removebg-preview.png"
             width="80"
           ></v-img>
-          <span class="inline-item copyright-text" style="color:text" > 
-            Copyright © 2024 Forward System Co. Ltd.
+          <span class="inline-item copyright-text" :style="{color:colortextfooter}" > 
+            <!-- Copyright © 2024 Forward System Co. Ltd. -->
+             {{ textfooter }}
           </span>
         </div>
       </v-col>
@@ -33,7 +34,10 @@ export default {
       url: enurl.apiUrl,
 
       ConfigDialog:false,
-      themecolor:""
+      themecolor:"",
+      textfooter:"",
+      colortextfooter:""
+
     };
   },
 
@@ -51,6 +55,8 @@ export default {
           if (response.data.status == 0) {
             console.log(response.data.data)
             self.themecolor = response.data.data.themecolor
+            self.textfooter = response.data.data.textfooter
+            self.colortextfooter = response.data.data.colortextfooter
           }
         })
         .catch(function (error) {
@@ -75,7 +81,7 @@ export default {
 .copyright-text {
   font-size: 0.875rem;
   margin-bottom: 0;
-  color: text;
+  /* color: text; */
   padding-left: 15px;
 }
 

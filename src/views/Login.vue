@@ -636,6 +636,12 @@ export default {
         // this.logoimageName = files[0].name;
       };
     },
+
+    ReloadPage(){
+      window.location.reload()
+
+    },
+
     SaveConfig(){
       let self = this;
       let temp = {
@@ -648,8 +654,8 @@ export default {
         .post(`${self.url}Login/SaveConfigLoginPage`, temp)
         .then(function (response) {
           if (response.data.status == 0) {
-            window.location.reload()
-
+            // window.location.reload()
+          self.ReloadPage()
           }
         })
         .catch(function (error) {

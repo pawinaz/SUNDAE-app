@@ -1,6 +1,6 @@
 <template>
   <nav style="z-index: 3; background-color: white">
-    <v-toolbar color="primary" height="60">
+    <v-toolbar :color="themecolor" height="90">
       <!-- <v-img
         alt="Logo"
         class="shrink app"
@@ -15,9 +15,10 @@
         class="shrink app"
         contain
         @click="NavigateToMain()"
-        src="@/assets/sundae.png"
+        :src="logoimage"
         transition="scale-transition"
-        width="100"
+        width="80"
+        height="80"
         style="float: left"
       />
       <p
@@ -183,12 +184,18 @@ export default {
       EditOldPassword: "",
       EditPassword: "",
       EditConfirmPassword: "",
+
+      ConfigDialog:false,
+      themecolor:"",
+      logoimage:""
     };
   },
 
   mounted() {
     let self = this;
     self.GetDataPermission();
+    self.GetDataConfigLoginPage()
+
   },
 
   methods: {
@@ -233,6 +240,23 @@ export default {
         .catch(function (error) {
           alert(error);
         });
+    },
+
+    GetDataConfigLoginPage(){
+      let self =this;
+      axios
+        .get(`${self.url}Login/GetDataConfigLoginPage`)
+        .then(function (response) {
+          if (response.data.status == 0) {
+            console.log(response.data.data)
+            self.logoimage = response.data.data.logoimage
+            self.themecolor = response.data.data.themecolor
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
     },
 
     GetDataUserByToken(token) {
@@ -400,7 +424,7 @@ export default {
   padding-left: 20px !important;
 }
 .v-toolbar {
-  background-color: white !important;
+  background-color: white ;
 }
 
 .text-password {
