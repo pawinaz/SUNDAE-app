@@ -1,6 +1,6 @@
 <template>
   <v-footer
-    :color="themecolor"
+    :color="themecolor" 
     style="margin-top: auto"
     class="text-caption footer-shadow"
   >

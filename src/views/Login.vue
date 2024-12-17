@@ -254,6 +254,7 @@
               </div>
             </v-col>
           </v-row> -->
+          
           <v-row>
             <v-col cols="12" md="6" align="center">
               <h2 style="font-weight: bold; font-size: 15px; color: text;">Logo Image</h2>
@@ -287,6 +288,28 @@
 
               <v-color-picker
               v-model="themecolor"
+                dot-size="25"
+                mode="hexa"
+                swatches-max-height="200"
+
+              ></v-color-picker>
+
+            </v-col>
+          </v-row>
+          
+          <v-row>
+          <v-col cols="12" md="6" align="center">
+              <h2 style="font-weight: bold; font-size: 15px; color: text;">Footer Name</h2>
+            <v-text-field
+              v-model="textfooter"
+              label="Filled text footer">
+            </v-text-field>
+            </v-col>
+            <v-col cols="12" md="6" align="center">
+              <h2 style="font-weight: bold; font-size: 15px; color: text;">Color Text Footer</h2>
+
+              <v-color-picker
+              v-model="colortextfooter"
                 dot-size="25"
                 mode="hexa"
                 swatches-max-height="200"
@@ -359,7 +382,9 @@ export default {
 
       ConfigDialog:false,
       logoimage:"",
-      themecolor:""
+      themecolor:"",
+      textfooter:"",
+      colortextfooter:""
 
     };
   },
@@ -616,6 +641,8 @@ export default {
       let temp = {
         logoimage: self.logoimage,
         themecolor:self.themecolor,
+        textfooter: self.textfooter,
+        colortextfooter: self.colortextfooter,
       };
       axios
         .post(`${self.url}Login/SaveConfigLoginPage`, temp)

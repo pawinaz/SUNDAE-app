@@ -1,75 +1,43 @@
 <template>
   <div>
     <v-card style="display: contents">
-      <div style="margin-left: 10px; margin-right: 10px">
-        <div
-          style="
-            font-size: 18px;
-            margin-left: 1rem;
-            margin-right: 1rem;
-            color: #444444;
-            cursor: default;
-            margin-top: -1rem;
-          "
-        ></div>
+      <div style="margin: 10px">
         <v-card-text>
-          <div style="margin-left: 10px; margin-right: 10px">
-            <v-row
-              cols="12"
-              xs="12"
-              sm="12"
-              md="12"
-              justify="center"
-              class="mt-5"
-            >
-              <v-col cols="12" md="12" align="center">
-                <!-- <div>
-                  <v-img
-                    width="200"
-                    height="120"
-                    src="@/assets/Sundae_Logo.png"
-                  ></v-img>
-                </div> -->
-                <div align="center">
-                  <v-img
-                    alt="Logo"
-                    class="shrink app"
-                    contain
-                    src="@/assets/sundae.png"
-                    transition="scale-transition"
-                    width="250"
-                  />
-                </div>
-                <p
-                  class="mt-5"
-                  style="font-size: 25px; font-weight: bold; color: text"
-                >
-                  {{ Username }}
-                </p>
-                <qrcode-vue
-                  class="mt-10"
-                  :value="QRvalue"
-                  :size="QRsize"
-                  level="M"
-                  style="background-color: white; padding: 2%; width: 300px; display: flex; justify-content: center;"
-                ></qrcode-vue>
-                <p
-                  class="mt-10"
-                  style="font-size: 18px; font-weight: bold; color: text"
-                >
-                  {{ ChangeFormatDate(CreateTime) }}
-                </p>
-                <div class="mt-10">
-                  <span style="font-size: 16px; color: text">
-                    Refresh In : </span
-                  ><span
-                    style="font-size: 16px; font-weight: bold; color: text"
-                    >{{ TextTime }}</span
-                  >
-                </div>
-              </v-col>
-              <v-col cols="12" md="12" align="center">
-      
+          <v-row
+            cols="12"
+            justify="center"
+            class="mt-5"
+          >
+            <v-col cols="12" md="6" align="center">
+              <v-img
+                alt="Logo"
+                class="shrink app"
+                contain
+                :src="logoimage"
+                transition="scale-transition"
+                width="150"
+              />
+              <p class="mt-5" style="font-size: 25px; font-weight: bold; color: text">
+                {{ Username }}
+              </p>
+              <div v-if="LoadingDialog" class="mt-10">
+                <v-progress-circular indeterminate color="primary"></v-progress-circular>
+              </div>
+              <qrcode-vue
+                v-else
+                class="mt-10"
+                :value="QRvalue"
+                :size="QRsize"
+                level="M"
+                style="background-color: white; padding: 2%; width: 300px; display: flex; justify-content: center;"
+              ></qrcode-vue>
+              <p class="mt-10" style="font-size: 18px; font-weight: bold; color: text">
+                {{ ChangeFormatDate(CreateTime) }}
+              </p>
+              <div class="mt-10">
+                <span style="font-size: 16px; color: text">Refresh In : </span>
+                <span style="font-size: 16px; font-weight: bold; color: text">{{ TextTime }}</span>
+              </div>
               <v-btn
                 height="40"
                 width="150"
@@ -79,9 +47,8 @@
               >
                 Back
               </v-btn>
-              </v-col>
-            </v-row>
-          </div>
+            </v-col>
+          </v-row>
         </v-card-text>
       </div>
     </v-card>
@@ -104,16 +71,20 @@ export default {
       url: enurl.apiUrl,
       LoadingDialog: false,
       QRvalue: "",
-      QRsize: 250,
+      QRsize: 200,
       Username: this.$cookies.get("Username"),
       CreateTime: "",
       TextTime: "",
+
+      ConfigDialog:false,
+      logoimage:""
     };
   },
 
   async mounted() {
     let self = this;
     await self.getMyQR();
+    self.GetDataConfigLoginPage()
   },
 
   methods: {
@@ -189,6 +160,23 @@ export default {
     goToManagePreRegister() {
       this.$router.push({ name: 'MainMenu' });
     },
+
+    GetDataConfigLoginPage(){
+      let self =this;
+      axios
+        .get(`${self.url}Login/GetDataConfigLoginPage`)
+        .then(function (response) {
+          if (response.data.status == 0) {
+            console.log(response.data.data)
+            self.logoimage = response.data.data.logoimage
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+
+    
   },
 };
 </script>
