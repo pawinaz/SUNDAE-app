@@ -301,8 +301,10 @@
           <v-col cols="12" md="6" align="center">
               <h2 style="font-weight: bold; font-size: 15px; color: text;">Footer Name</h2>
             <v-text-field
+              clearable
               v-model="textfooter"
-              label="Filled text footer">
+              label="textfooter">
+              
             </v-text-field>
             </v-col>
             <v-col cols="12" md="6" align="center">
@@ -384,13 +386,16 @@ export default {
       logoimage:"",
       themecolor:"",
       textfooter:"",
-      colortextfooter:""
+      colortextfooter:"",
+      
+      
 
     };
   },
 
   mounted: function () {
     let self = this;
+    self.GetDataConfigFooter()
     self.GetDataConfigLoginPage()
     let isLoggedIn = this.$cookies.get("isLoggedIn");
     if (isLoggedIn == "true") {
@@ -661,6 +666,7 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+      self.ConfigDialog = false;
     },
     GetDataConfigLoginPage(){
       let self =this;
@@ -671,6 +677,24 @@ export default {
             console.log(response.data.data)
             self.logoimage = response.data.data.logoimage
             self.themecolor = response.data.data.themecolor
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+
+    },
+
+    GetDataConfigFooter(){
+      let self =this;
+      axios
+        .get(`${self.url}Login/GetDataConfigFooter`)
+        .then(function (response) {
+          if (response.data.status == 0) {
+            console.log(response.data.data)
+            self.themecolor = response.data.data.themecolor
+            self.textfooter = response.data.data.textfooter
+            self.colortextfooter = response.data.data.colortextfooter
           }
         })
         .catch(function (error) {
