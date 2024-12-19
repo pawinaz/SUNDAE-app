@@ -304,7 +304,7 @@
                 </v-btn>
                 <input
                   style="display: none"
-                  ref="fileimagelogo"
+                  ref="fileimagelogin"
                   id="file-upload"
                   accept="image/*"
                   name="file-input"
@@ -730,6 +730,8 @@ export default {
     onPickFile() {
       let self = this;
       self.$refs.fileimagelogo.click();
+      self.$refs.fileimagelogin.click();
+
     },
 
     handleFileInputLogo(data) {
