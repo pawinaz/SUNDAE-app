@@ -11,6 +11,7 @@
             class="inline-item"
             src="@/assets/fs-white-removebg-preview.png"
             width="80"
+            height="33"
           ></v-img>
           <span v-if = "statustheme" class="inline-item copyright-text" :style="{color:colortextfooter}" > 
             

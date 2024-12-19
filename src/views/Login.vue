@@ -108,7 +108,7 @@
       </v-col>
       <v-col cols="12" md="6" v-show="$vuetify.breakpoint.smAndDown == false">
         <img
-          src="@/assets/building.jpg"
+          :src="imagelogin"
           alt="welcome"
           style="width: 100%; height: 100%"
         />
@@ -123,15 +123,15 @@
       <v-card>
         <v-card-title>
           <v-spacer></v-spacer>
-          <v-btn icon x-large @click="CloseRegisterDialog()">
+          <v-btn icon  @click="CloseRegisterDialog()">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-card-title>
         <v-card-text>
-          <v-row>
+          <v-row style="margin-bottom: -10px;">
             <v-col cols="12" md="6">
               <div align="left">
-                <v-img width="250" height="auto" :src="logoimage"></v-img>
+                <v-img width="150" height="150" :src="logoimage"></v-img>
               </div>
             </v-col>
           </v-row>
@@ -147,14 +147,15 @@
                 label="Username"
                 type="text"
                 outlined
+                dense
                 v-model="Username_Register"
               />
             </v-col>
             <v-col cols="12" md="3">
               <v-btn
                 block
-                x-large
-                color="primary"
+                large
+                :color="themecolor"
                 style="color: white"
                 @click="CheckDuplicateUsername(Username_Register)"
                 class="rounded-lg"
@@ -167,6 +168,7 @@
             <v-col cols="12" md="6">
               <v-text-field
                 outlined
+                dense
                 placeholder="Password"
                 label="Password"
                 :append-icon="ShowPassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -179,6 +181,7 @@
             <v-col cols="12" md="6">
               <v-text-field
                 outlined
+                dense
                 placeholder="Re Password"
                 label="Re Password"
                 :append-icon="ShowRePassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -193,6 +196,7 @@
           <v-row>
             <v-col cols="12" md="6">
               <v-text-field
+              dense
                 placeholder="First Name"
                 label="First Name"
                 type="text"
@@ -202,6 +206,7 @@
             </v-col>
             <v-col cols="12" md="6">
               <v-text-field
+              dense
                 placeholder="Last Name"
                 label="Last Name"
                 type="text"
@@ -214,6 +219,7 @@
           <v-row>
             <v-col cols="12" md="6">
               <v-text-field
+              dense
                 placeholder="Email"
                 label="Email"
                 type="email"
@@ -223,6 +229,7 @@
             </v-col>
             <v-col cols="12" md="6">
               <v-text-field
+              dense
                 placeholder="Telephone"
                 label="Telephone"
                 type="number"
@@ -238,7 +245,7 @@
                 width="250"
                 color="green"
                 class="rounded-lg white--text"
-                x-large
+                large
                 @click="Register()"
                 >Submit</v-btn
               >
@@ -350,11 +357,11 @@
               <v-text-field clearable v-model="textfooter" label="textfooter" outlined>
               </v-text-field>
             </v-col>
-            <v-col cols="12" md="6" align="center">
+            <v-col cols="12" md="6" class="d-flex flex-column align-center">
               <h2 style="font-weight: bold; font-size: 15px; color: text">
                 Status
               </h2>
-              <v-radio-group v-model="status" row>
+              <v-radio-group v-model="status" row class="d-flex flex-column align-center">
                 <v-radio
                   label="Active"
                   value="active"
@@ -382,7 +389,7 @@
                 width="250"
                 color="green"
                 class="rounded-lg white--text"
-                x-large
+                large
                 @click="SaveConfig()"
                 >Submit</v-btn
               >
@@ -805,6 +812,7 @@ export default {
             self.textfooter = response.data.data.textfooter;
             self.colortextfooter = response.data.data.colortextfooter;
             self.status = response.data.data.status == true ? 'active' : 'inactive';
+            self.imagelogin = response.data.data.imagelogin;
           }
         })
         .catch(function (error) {
