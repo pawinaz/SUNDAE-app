@@ -290,6 +290,47 @@
             </v-col>
             <v-col cols="12" md="6" align="center">
               <h2 style="font-weight: bold; font-size: 15px; color: text">
+                Image Login
+              </h2>
+              <div>
+                <img :src="imagelogin" width="270" height="200" />
+                <v-btn
+                  color="primary"
+                  class="white--text mt-2 text-capitalize"
+                  router
+                  width="150"
+                  @click="onPickFile"
+                  >Upload
+                </v-btn>
+                <input
+                  style="display: none"
+                  ref="fileimagelogo"
+                  id="file-upload"
+                  accept="image/*"
+                  name="file-input"
+                  type="file"
+                  @change="handleFileInputLogo"
+                />
+              </div>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            
+            <v-col cols="12" md="6" align="center">
+              <h2 style="font-weight: bold; font-size: 15px; color: text">
+                Color Text Footer
+              </h2>
+              <v-color-picker
+                v-model="colortextfooter"
+                dot-size="25"
+                mode="hexa"
+                swatches-max-height="200"
+              ></v-color-picker>
+            </v-col>
+
+            <v-col cols="12" md="6" align="center">
+              <h2 style="font-weight: bold; font-size: 15px; color: text">
                 Theme Color
               </h2>
               <v-color-picker
@@ -306,24 +347,10 @@
               <h2 style="font-weight: bold; font-size: 15px; color: text">
                 Footer Name
               </h2>
-              <v-text-field clearable v-model="textfooter" label="textfooter">
+              <v-text-field clearable v-model="textfooter" label="textfooter" outlined>
               </v-text-field>
             </v-col>
             <v-col cols="12" md="6" align="center">
-              <h2 style="font-weight: bold; font-size: 15px; color: text">
-                Color Text Footer
-              </h2>
-              <v-color-picker
-                v-model="colortextfooter"
-                dot-size="25"
-                mode="hexa"
-                swatches-max-height="200"
-              ></v-color-picker>
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <v-col cols="12" md="12" align="center">
               <h2 style="font-weight: bold; font-size: 15px; color: text">
                 Status
               </h2>
@@ -346,6 +373,7 @@
                 </v-radio>
               </v-radio-group>
             </v-col>
+           
           </v-row>
 
           <v-row>
@@ -463,6 +491,7 @@ export default {
       colortextfooter: "",
       status:false,
       logo: require('@/assets/sundae.png'),
+      imagelogin:"",
       
     };
   },
@@ -710,6 +739,7 @@ export default {
       reader.readAsDataURL(files[0]);
       reader.onload = (data) => {
         this.logoimage = data.target.result;
+        this.imagelogin = data.target.result;
         // this.logoimageName = files[0].name;
       };
     },
@@ -725,6 +755,7 @@ export default {
         themecolor: self.themecolor,
         textfooter: self.textfooter,
         colortextfooter: self.colortextfooter,
+        imagelogin: self.imagelogin,
         status: self.status == 'active' ? true : false,
       };
       console.log(temp)
