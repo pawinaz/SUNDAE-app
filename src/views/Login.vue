@@ -7,16 +7,25 @@
           style="top: 50%; left: 50%; transform: translate(-50%, -50%)"
           shaped
         >
-          <v-card-text style="width: auto" >
+          <v-card-text style="width: auto">
             <v-tabs class="d-none" v-model="model"></v-tabs>
             <v-tabs-items v-model="model">
               <v-tab-item :value="`tab-1`">
                 <div align="center">
-                  <v-img
+                  <v-img v-if="status=='inactive'"
                     alt="Logo"
                     class="shrink app"
                     contain
-                    :src="logoimage"
+                    :src= "logo"
+                    @click="OpenConFigDialog()"
+                    transition="scale-transition"
+                    width="200"
+                  />
+                  <v-img v-else
+                    alt="Logo"
+                    class="shrink app"
+                    contain
+                    :src="logoimage" 
                     @click="OpenConFigDialog()"
                     transition="scale-transition"
                     width="200"
@@ -54,10 +63,20 @@
                 </v-row>
                 <v-row>
                   <v-col cols="12" md="1"></v-col>
+                  
                   <v-col cols="12" md="10">
-                    <v-btn
+                    <v-btn v-if="themecolor != '' && status == 'active'"
                       block
                       :color="themecolor"
+                      style="color: white"
+                      @click="Login()"
+                      class="rounded-lg"
+                      x-large
+                      >Sign In</v-btn
+                    >
+                    <v-btn v-else
+                      block
+                      :color="'primary'"
                       style="color: white"
                       @click="Login()"
                       class="rounded-lg"
@@ -96,16 +115,15 @@
       </v-col>
     </v-row>
 
-
-    <v-dialog v-model="RegisterDialog" transition="dialog-top-transition" width="900">
+    <v-dialog
+      v-model="RegisterDialog"
+      transition="dialog-top-transition"
+      width="900"
+    >
       <v-card>
         <v-card-title>
           <v-spacer></v-spacer>
-          <v-btn
-            icon
-            x-large
-            @click="CloseRegisterDialog()"
-          >
+          <v-btn icon x-large @click="CloseRegisterDialog()">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-card-title>
@@ -113,17 +131,13 @@
           <v-row>
             <v-col cols="12" md="6">
               <div align="left">
-                <v-img
-                  width="250"
-                  height="auto"
-                  :src="logoimage"
-                ></v-img>
+                <v-img width="250" height="auto" :src="logoimage"></v-img>
               </div>
             </v-col>
           </v-row>
           <v-row>
             <v-col>
-              <h1 style="color: black;">Register | ลงทะเบียน</h1>
+              <h1 style="color: black">Register | ลงทะเบียน</h1>
             </v-col>
           </v-row>
           <v-row>
@@ -148,6 +162,7 @@
               >
             </v-col>
           </v-row>
+
           <v-row>
             <v-col cols="12" md="6">
               <v-text-field
@@ -174,6 +189,7 @@
               />
             </v-col>
           </v-row>
+
           <v-row>
             <v-col cols="12" md="6">
               <v-text-field
@@ -194,6 +210,7 @@
               />
             </v-col>
           </v-row>
+
           <v-row>
             <v-col cols="12" md="6">
               <v-text-field
@@ -214,6 +231,7 @@
               />
             </v-col>
           </v-row>
+
           <v-row>
             <v-col cols="12" md="12" align="center">
               <v-btn
@@ -230,96 +248,106 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="ConfigDialog" transition="dialog-top-transition" width="900">
+    <v-dialog
+      v-model="ConfigDialog"
+      transition="dialog-top-transition"
+      width="900"
+    >
       <v-card>
         <v-card-title>
           <v-spacer></v-spacer>
-          <v-btn
-            icon
-            x-large
-            @click="CloseConfig()"
-          >
+          <v-btn icon x-large @click="CloseConfig()">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-card-title>
+
         <v-card-text>
-          <!-- <v-row>
-            <v-col cols="12" md="6">
-              <div align="left">
-                <v-img
-                  width="250"
-                  height="auto"
-                  src="@/assets/sundae.png"
-                ></v-img>
+          <v-row>
+            <v-col cols="12" md="6" align="center">
+              <h2 style="font-weight: bold; font-size: 15px; color: text">
+                Logo Image
+              </h2>
+              <div>
+                <img :src="logoimage" width="270" height="200" />
+                <v-btn
+                  color="primary"
+                  class="white--text mt-2 text-capitalize"
+                  router
+                  width="150"
+                  @click="onPickFile"
+                  >Upload
+                </v-btn>
+                <input
+                  style="display: none"
+                  ref="fileimagelogo"
+                  id="file-upload"
+                  accept="image/*"
+                  name="file-input"
+                  type="file"
+                  @change="handleFileInputLogo"
+                />
               </div>
             </v-col>
-          </v-row> -->
-          
-          <v-row>
             <v-col cols="12" md="6" align="center">
-              <h2 style="font-weight: bold; font-size: 15px; color: text;">Logo Image</h2>
-            <div>
-              <img
-              :src="logoimage"
-              width="270"
-              height="200"
-              />
-            <v-btn
-            color="primary"
-            class="white--text mt-2 text-capitalize"
-            router
-            width="150"
-            @click="onPickFile"
-            >Upload
-            </v-btn>
-            <input
-            style="display:none"
-            ref="fileimagelogo"
-            id="file-upload"
-            accept="image/*"
-            name="file-input"
-            type="file"
-            @change="handleFileInputLogo"
-            />
-            </div>
-            </v-col>
-            <v-col cols="12" md="6" align="center">
-              <h2 style="font-weight: bold; font-size: 15px; color: text;">Theme Color</h2>
-
+              <h2 style="font-weight: bold; font-size: 15px; color: text">
+                Theme Color
+              </h2>
               <v-color-picker
-              v-model="themecolor"
+                v-model="themecolor"
                 dot-size="25"
                 mode="hexa"
                 swatches-max-height="200"
-
               ></v-color-picker>
-
             </v-col>
           </v-row>
-          
+
           <v-row>
-          <v-col cols="12" md="6" align="center">
-              <h2 style="font-weight: bold; font-size: 15px; color: text;">Footer Name</h2>
-            <v-text-field
-              clearable
-              v-model="textfooter"
-              label="textfooter">
-              
-            </v-text-field>
+            <v-col cols="12" md="6" align="center">
+              <h2 style="font-weight: bold; font-size: 15px; color: text">
+                Footer Name
+              </h2>
+              <v-text-field clearable v-model="textfooter" label="textfooter">
+              </v-text-field>
             </v-col>
             <v-col cols="12" md="6" align="center">
-              <h2 style="font-weight: bold; font-size: 15px; color: text;">Color Text Footer</h2>
-
+              <h2 style="font-weight: bold; font-size: 15px; color: text">
+                Color Text Footer
+              </h2>
               <v-color-picker
-              v-model="colortextfooter"
+                v-model="colortextfooter"
                 dot-size="25"
                 mode="hexa"
                 swatches-max-height="200"
-
               ></v-color-picker>
-
             </v-col>
           </v-row>
+
+          <v-row>
+            <v-col cols="12" md="12" align="center">
+              <h2 style="font-weight: bold; font-size: 15px; color: text">
+                Status
+              </h2>
+              <v-radio-group v-model="status" row>
+                <v-radio
+                  label="Active"
+                  value="active"
+                  color="green"
+                  :style="{ fontSize: '1.2em', padding: '10px 20px' }"
+                >
+                  <v-icon left>mdi-check</v-icon>
+                </v-radio>
+                <v-radio
+                  label="Inactive"
+                  value="inactive"
+                  color="red"
+                  :style="{ fontSize: '1.2em', padding: '10px 20px' }"
+                >
+                  <v-icon left>mdi-close</v-icon>
+                </v-radio>
+              </v-radio-group>
+            </v-col>
+          </v-row>
+
           <v-row>
             <v-col cols="12" md="12" align="center">
               <v-btn
@@ -342,6 +370,52 @@
           <v-row>
             <LoadingComponent class="centered"></LoadingComponent>
           </v-row>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog
+      v-model="LoginConfig"
+      transition="dialog-top-transition"
+      width="900"
+    >
+      <v-card>
+        <v-card-title>
+          <v-spacer></v-spacer>
+          <v-btn icon x-large @click="CloseRegisterDialog()">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-text>
+          <v-row style="margin-bottom: -10%">
+                  <v-col cols="12" md="1"></v-col>
+                  <v-col cols="12" md="10">
+                    <v-text-field
+                      placeholder="Username"
+                      name="login"
+                      type="text"
+                      outlined
+                      v-model="username"
+                      @keyup.enter="Login"
+                    />
+                  </v-col>
+                  <v-col cols="12" md="1"></v-col>
+                </v-row>
+                <v-row style="margin-bottom: -50px">
+                  <v-col cols="12" md="1"></v-col>
+                  <v-col cols="12" md="10">
+                    <v-text-field
+                      outlined
+                      placeholder="Password"
+                      :append-icon="ShowPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                      :type="ShowPassword ? 'text' : 'password'"
+                      @click:append="ShowPassword = !ShowPassword"
+                      id="password"
+                      @keyup.enter="Login"
+                      v-model="password"
+                    />
+                  </v-col>
+                </v-row>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -372,7 +446,7 @@ export default {
       RegisterDialog: false,
       ShowPassword: false,
       ShowRePassword: false,
-      
+
       //Register
       Username_Register: "",
       Password_Register: "",
@@ -382,21 +456,21 @@ export default {
       Telephone_Register: "",
       Email_Register: "",
 
-      ConfigDialog:false,
-      logoimage:"",
-      themecolor:"",
-      textfooter:"",
-      colortextfooter:"",
+      ConfigDialog: false,
+      logoimage: "",
+      themecolor: "",
+      textfooter: "",
+      colortextfooter: "",
+      status:false,
+      logo: require('@/assets/sundae.png'),
       
-      
-
     };
   },
 
   mounted: function () {
     let self = this;
-    self.GetDataConfigFooter()
-    self.GetDataConfigLoginPage()
+    self.GetDataConfigFooter();
+    self.GetDataConfigLoginPage();
     let isLoggedIn = this.$cookies.get("isLoggedIn");
     if (isLoggedIn == "true") {
       let token = this.$cookies.get("Token");
@@ -574,13 +648,11 @@ export default {
       self.RegisterDialog = false;
     },
 
-
     CloseConfig() {
       let self = this;
       // self.ClearData();
       self.ConfigDialog = false;
     },
-    
 
     CheckLoginToken(value) {
       let self = this;
@@ -622,45 +694,46 @@ export default {
         self.flagPassword = true;
       }
     },
-    OpenConFigDialog(){
+    OpenConFigDialog() {
       let self = this;
       self.ConfigDialog = true;
     },
-    onPickFile(){
+    onPickFile() {
       let self = this;
       self.$refs.fileimagelogo.click();
     },
 
-    handleFileInputLogo(data){
+    handleFileInputLogo(data) {
       let files = data.target.files;
       files = data.target.files;
       var reader = new FileReader();
       reader.readAsDataURL(files[0]);
-      reader.onload = (data) =>{
+      reader.onload = (data) => {
         this.logoimage = data.target.result;
         // this.logoimageName = files[0].name;
       };
     },
 
-    ReloadPage(){
-      window.location.reload()
-
+    ReloadPage() {
+      window.location.reload();
     },
 
-    SaveConfig(){
+    SaveConfig() {
       let self = this;
       let temp = {
         logoimage: self.logoimage,
-        themecolor:self.themecolor,
+        themecolor: self.themecolor,
         textfooter: self.textfooter,
         colortextfooter: self.colortextfooter,
+        status: self.status == 'active' ? true : false,
       };
+      console.log(temp)
       axios
         .post(`${self.url}Login/SaveConfigLoginPage`, temp)
         .then(function (response) {
           if (response.data.status == 0) {
             // window.location.reload()
-          self.ReloadPage()
+            self.ReloadPage();
           }
         })
         .catch(function (error) {
@@ -668,40 +741,47 @@ export default {
         });
       self.ConfigDialog = false;
     },
-    GetDataConfigLoginPage(){
-      let self =this;
+    ToggleStatus(value){
+      this.status = value;
+    },
+
+    GetDataConfigLoginPage() {
+      let self = this;
       axios
         .get(`${self.url}Login/GetDataConfigLoginPage`)
         .then(function (response) {
           if (response.data.status == 0) {
-            console.log(response.data.data)
-            self.logoimage = response.data.data.logoimage
-            self.themecolor = response.data.data.themecolor
+            console.log(response.data.data);
+            self.logoimage = response.data.data.logoimage;
+            self.themecolor = response.data.data.themecolor;
+            self.textfooter = response.data.data.textfooter;
+            self.colortextfooter = response.data.data.colortextfooter;
+            self.status = response.data.data.status == true ? 'active' : 'inactive';
           }
         })
         .catch(function (error) {
           console.log(error);
         });
-
     },
 
-    GetDataConfigFooter(){
-      let self =this;
+    GetDataConfigFooter() {
+      let self = this;
       axios
         .get(`${self.url}Login/GetDataConfigFooter`)
         .then(function (response) {
           if (response.data.status == 0) {
-            console.log(response.data.data)
-            self.themecolor = response.data.data.themecolor
-            self.textfooter = response.data.data.textfooter
-            self.colortextfooter = response.data.data.colortextfooter
+            console.log(response.data.data);
+            self.themecolor = response.data.data.themecolor;
+            self.textfooter = response.data.data.textfooter;
+            self.colortextfooter = response.data.data.colortextfooter;
+            self.status = response.data.data.status == true ? 'active' : 'inactive';
+
           }
         })
         .catch(function (error) {
           console.log(error);
         });
-
-    }
+    },
 
 
   },
@@ -780,7 +860,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .right {
@@ -801,11 +880,11 @@ export default {
   .split-container {
     flex-direction: column;
   }
-  
+
   .split {
     width: 100%;
   }
-  
+
   .right {
     display: none;
   }

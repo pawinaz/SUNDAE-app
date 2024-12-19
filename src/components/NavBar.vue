@@ -1,6 +1,84 @@
 <template>
   <nav style="z-index: 3; background-color: white">
-    <v-toolbar :color="themecolor" height="90">
+    <v-toolbar v-if = "statustheme"
+    :color="themecolor" 
+    height="90">
+      <!-- <v-img
+        alt="Logo"
+        class="shrink app"
+        contain
+        @click="NavigateToMain()"
+        src="@/assets/punn-logo.png"
+        transition="scale-transition"
+        width="100"
+      /> -->
+      <v-img
+        alt="Logo"
+        class="shrink app"
+        contain
+        @click="NavigateToMain()"
+        :src="logoimage"
+        transition="scale-transition"
+        width="80"
+        height="80"
+        style="float: left"
+      />
+      <p
+        v-show="!$vuetify.breakpoint.smAndDown"
+        style="
+          color: black;
+          margin-left: 1rem;
+          font-size: 18px;
+          margin-top: 14px;
+          cursor: default;
+          float: left;
+        "
+      ></p>
+
+     
+      <v-spacer></v-spacer>
+      <v-menu offset-y>
+        <template v-slot:activator="{ on: menu }">
+          <v-btn icon v-on="{ ...menu }">
+            <v-icon color="text">mdi-menu-down</v-icon>
+          </v-btn>
+          <div>
+            <v-btn icon @click="toggleTheme">
+            <v-icon :color="isDarkTheme ? 'yellow darken-3' : 'blue-grey darken-4'">
+              {{ isDarkTheme ? "mdi-lightbulb-outline" : "mdi-lightbulb" }}
+            </v-icon>
+          </v-btn>
+          <v-icon color="text" left>mdi-account-heart</v-icon>
+   
+            <span style="font-size: 18px; color: text; padding-right: 10px">{{
+              Username
+            }}</span>
+          </div>
+        </template>
+        <v-list v-if="StatusAdmin">
+          <v-list-item v-for="(item, index) in itemsMenuAdmin" :key="index">
+            <v-list-item-title
+              style="cursor: pointer"
+              @click="ActionMenu(item.title)"
+              >{{ item.title }}</v-list-item-title
+            >
+          </v-list-item>
+        </v-list>
+        <v-list v-else>
+          <v-list-item v-for="(item, index) in itemsMenu" :key="index">
+            <v-list-item-title
+              style="cursor: pointer"
+              @click="ActionMenu(item.title)"
+              >{{ item.title }}</v-list-item-title
+            >
+          </v-list-item>
+        </v-list>
+      </v-menu>
+    </v-toolbar>
+
+    <v-toolbar v-else
+    :color="'primary'" 
+    height="90">
       <!-- <v-img
         alt="Logo"
         class="shrink app"
@@ -187,7 +265,8 @@ export default {
 
       ConfigDialog:false,
       themecolor:"",
-      logoimage:""
+      logoimage:"",
+      statustheme:false
     };
   },
 
@@ -248,9 +327,9 @@ export default {
         .get(`${self.url}Login/GetDataConfigLoginPage`)
         .then(function (response) {
           if (response.data.status == 0) {
-            console.log(response.data.data)
             self.logoimage = response.data.data.logoimage
             self.themecolor = response.data.data.themecolor
+            self.statustheme = response.data.data.status
           }
         })
         .catch(function (error) {
