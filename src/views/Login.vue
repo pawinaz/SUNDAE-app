@@ -299,7 +299,7 @@
                   class="white--text mt-2 text-capitalize"
                   router
                   width="150"
-                  @click="onPickFile"
+                  @click="onPickFileimage"
                   >Upload
                 </v-btn>
                 <input
@@ -309,7 +309,7 @@
                   accept="image/*"
                   name="file-input"
                   type="file"
-                  @change="handleFileInputLogo"
+                  @change="handleFileInputimage"
                 />
               </div>
             </v-col>
@@ -730,9 +730,13 @@ export default {
     onPickFile() {
       let self = this;
       self.$refs.fileimagelogo.click();
-      self.$refs.fileimagelogin.click();
-
     },
+
+    onPickFileimage() {
+      let self = this;
+      self.$refs.fileimagelogin.click();
+    },
+
 
     handleFileInputLogo(data) {
       let files = data.target.files;
@@ -741,6 +745,17 @@ export default {
       reader.readAsDataURL(files[0]);
       reader.onload = (data) => {
         this.logoimage = data.target.result;
+
+        // this.logoimageName = files[0].name;
+      };
+    },
+
+    handleFileInputimage(data) {
+      let files = data.target.files;
+      files = data.target.files;
+      var reader = new FileReader();
+      reader.readAsDataURL(files[0]);
+      reader.onload = (data) => {
         this.imagelogin = data.target.result;
         // this.logoimageName = files[0].name;
       };
