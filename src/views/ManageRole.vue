@@ -254,7 +254,7 @@
           <v-row>
             <v-col cols="12" md="3">
               <v-checkbox
-                color="text"
+                color="primary"
                 label="Redemption"
                 v-model="RedemptionStatus"
                 hide-details

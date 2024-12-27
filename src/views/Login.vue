@@ -12,20 +12,22 @@
             <v-tabs-items v-model="model">
               <v-tab-item :value="`tab-1`">
                 <div align="center">
-                  <v-img v-if="status=='inactive'"
+                  <v-img
+                    v-if="status == 'inactive'"
                     alt="Logo"
                     class="shrink app"
                     contain
-                    :src= "logo"
+                    :src="logo"
                     @click="OpenConFigDialog()"
                     transition="scale-transition"
                     width="200"
                   />
-                  <v-img v-else
+                  <v-img
+                    v-else
                     alt="Logo"
                     class="shrink app"
                     contain
-                    :src="logoimage" 
+                    :src="logoimage"
                     @click="OpenConFigDialog()"
                     transition="scale-transition"
                     width="200"
@@ -63,9 +65,10 @@
                 </v-row>
                 <v-row>
                   <v-col cols="12" md="1"></v-col>
-                  
+
                   <v-col cols="12" md="10">
-                    <v-btn v-if="themecolor != '' && status == 'active'"
+                    <v-btn
+                      v-if="themecolor != '' && status == 'active'"
                       block
                       :color="themecolor"
                       style="color: white"
@@ -74,7 +77,8 @@
                       x-large
                       >Sign In</v-btn
                     >
-                    <v-btn v-else
+                    <v-btn
+                      v-else
                       block
                       :color="'primary'"
                       style="color: white"
@@ -108,6 +112,14 @@
       </v-col>
       <v-col cols="12" md="6" v-show="$vuetify.breakpoint.smAndDown == false">
         <img
+          v-if="status == 'inactive'"
+          src="@/assets/building.jpg"
+          alt="welcome"
+          style="width: 100%; height: 100%"
+        />
+
+        <img
+          v-else
           :src="imagelogin"
           alt="welcome"
           style="width: 100%; height: 100%"
@@ -123,12 +135,12 @@
       <v-card>
         <v-card-title>
           <v-spacer></v-spacer>
-          <v-btn icon  @click="CloseRegisterDialog()">
+          <v-btn icon @click="CloseRegisterDialog()">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-card-title>
         <v-card-text>
-          <v-row style="margin-bottom: -10px;">
+          <v-row style="margin-bottom: -10px">
             <v-col cols="12" md="6">
               <div align="left">
                 <v-img width="150" height="150" :src="logoimage"></v-img>
@@ -196,7 +208,7 @@
           <v-row>
             <v-col cols="12" md="6">
               <v-text-field
-              dense
+                dense
                 placeholder="First Name"
                 label="First Name"
                 type="text"
@@ -206,7 +218,7 @@
             </v-col>
             <v-col cols="12" md="6">
               <v-text-field
-              dense
+                dense
                 placeholder="Last Name"
                 label="Last Name"
                 type="text"
@@ -219,7 +231,7 @@
           <v-row>
             <v-col cols="12" md="6">
               <v-text-field
-              dense
+                dense
                 placeholder="Email"
                 label="Email"
                 type="email"
@@ -229,7 +241,7 @@
             </v-col>
             <v-col cols="12" md="6">
               <v-text-field
-              dense
+                dense
                 placeholder="Telephone"
                 label="Telephone"
                 type="number"
@@ -323,7 +335,6 @@
           </v-row>
 
           <v-row>
-            
             <v-col cols="12" md="6" align="center">
               <h2 style="font-weight: bold; font-size: 15px; color: text">
                 Color Text Footer
@@ -354,14 +365,23 @@
               <h2 style="font-weight: bold; font-size: 15px; color: text">
                 Footer Name
               </h2>
-              <v-text-field clearable v-model="textfooter" label="textfooter" outlined>
+              <v-text-field
+                clearable
+                v-model="textfooter"
+                label="textfooter"
+                outlined
+              >
               </v-text-field>
             </v-col>
             <v-col cols="12" md="6" class="d-flex flex-column align-center">
               <h2 style="font-weight: bold; font-size: 15px; color: text">
                 Status
               </h2>
-              <v-radio-group v-model="status" row class="d-flex flex-column align-center">
+              <v-radio-group
+                v-model="status"
+                row
+                class="d-flex flex-column align-center"
+              >
                 <v-radio
                   label="Active"
                   value="active"
@@ -380,7 +400,6 @@
                 </v-radio>
               </v-radio-group>
             </v-col>
-           
           </v-row>
 
           <v-row>
@@ -409,6 +428,28 @@
       </v-card>
     </v-dialog>
 
+    <!--dialogconfiglogin-->
+    <v-dialog
+      v-model="loginsetconfig"
+      width="auto"
+    >
+      <v-card
+        max-width="400"
+        prepend-icon="mdi-update"
+        text="Your application will relaunch automatically after the update is complete."
+        title="Update in progress"
+      >
+        <template v-slot:actions>
+          <v-btn
+            class="ms-auto"
+            text="Ok"
+            @click="dialog = false"
+          ></v-btn>
+        </template>
+      </v-card>
+    </v-dialog>
+
+
     <v-dialog
       v-model="LoginConfig"
       transition="dialog-top-transition"
@@ -423,34 +464,34 @@
         </v-card-title>
         <v-card-text>
           <v-row style="margin-bottom: -10%">
-                  <v-col cols="12" md="1"></v-col>
-                  <v-col cols="12" md="10">
-                    <v-text-field
-                      placeholder="Username"
-                      name="login"
-                      type="text"
-                      outlined
-                      v-model="username"
-                      @keyup.enter="Login"
-                    />
-                  </v-col>
-                  <v-col cols="12" md="1"></v-col>
-                </v-row>
-                <v-row style="margin-bottom: -50px">
-                  <v-col cols="12" md="1"></v-col>
-                  <v-col cols="12" md="10">
-                    <v-text-field
-                      outlined
-                      placeholder="Password"
-                      :append-icon="ShowPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                      :type="ShowPassword ? 'text' : 'password'"
-                      @click:append="ShowPassword = !ShowPassword"
-                      id="password"
-                      @keyup.enter="Login"
-                      v-model="password"
-                    />
-                  </v-col>
-                </v-row>
+            <v-col cols="12" md="1"></v-col>
+            <v-col cols="12" md="10">
+              <v-text-field
+                placeholder="Username"
+                name="login"
+                type="text"
+                outlined
+                v-model="username"
+                @keyup.enter="Login"
+              />
+            </v-col>
+            <v-col cols="12" md="1"></v-col>
+          </v-row>
+          <v-row style="margin-bottom: -50px">
+            <v-col cols="12" md="1"></v-col>
+            <v-col cols="12" md="10">
+              <v-text-field
+                outlined
+                placeholder="Password"
+                :append-icon="ShowPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="ShowPassword ? 'text' : 'password'"
+                @click:append="ShowPassword = !ShowPassword"
+                id="password"
+                @keyup.enter="Login"
+                v-model="password"
+              />
+            </v-col>
+          </v-row>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -496,10 +537,10 @@ export default {
       themecolor: "",
       textfooter: "",
       colortextfooter: "",
-      status:false,
-      logo: require('@/assets/sundae.png'),
-      imagelogin:"",
-      
+      status: false,
+      logo: require("@/assets/sundae.png"),
+      imagelogin: "",
+      loginsetconfig: false,
     };
   },
 
@@ -715,7 +756,12 @@ export default {
           }
         })
         .catch(function (error) {
-          console.log(error);
+          Swal.fire({
+            icon: "error",
+            title: "Error...",
+            width: 900,
+            text: error.response.data.message,
+          });
         });
     },
 
@@ -744,7 +790,6 @@ export default {
       self.$refs.fileimagelogin.click();
     },
 
-
     handleFileInputLogo(data) {
       let files = data.target.files;
       files = data.target.files;
@@ -772,6 +817,18 @@ export default {
       window.location.reload();
     },
 
+    loginsetting() {
+      let self = this;
+      self.useradmin = "admin";
+      self.passadmin = "password";
+
+    },
+
+    Opensetting() {
+      let self = this;
+      self.loginsetconfig = true;
+    },
+
     SaveConfig() {
       let self = this;
       let temp = {
@@ -780,23 +837,26 @@ export default {
         textfooter: self.textfooter,
         colortextfooter: self.colortextfooter,
         imagelogin: self.imagelogin,
-        status: self.status == 'active' ? true : false,
+        status: self.status == "active" ? true : false,
       };
-      console.log(temp)
       axios
         .post(`${self.url}Login/SaveConfigLoginPage`, temp)
         .then(function (response) {
           if (response.data.status == 0) {
-            // window.location.reload()
             self.ReloadPage();
           }
         })
         .catch(function (error) {
-          console.log(error);
+          Swal.fire({
+            icon: "error",
+            title: "Error...",
+            width: 900,
+            text: error.response.data.message,
+          });
         });
       self.ConfigDialog = false;
     },
-    ToggleStatus(value){
+    ToggleStatus(value) {
       this.status = value;
     },
 
@@ -806,17 +866,22 @@ export default {
         .get(`${self.url}Login/GetDataConfigLoginPage`)
         .then(function (response) {
           if (response.data.status == 0) {
-            console.log(response.data.data);
             self.logoimage = response.data.data.logoimage;
             self.themecolor = response.data.data.themecolor;
             self.textfooter = response.data.data.textfooter;
             self.colortextfooter = response.data.data.colortextfooter;
-            self.status = response.data.data.status == true ? 'active' : 'inactive';
+            self.status =
+              response.data.data.status == true ? "active" : "inactive";
             self.imagelogin = response.data.data.imagelogin;
           }
         })
         .catch(function (error) {
-          console.log(error);
+          Swal.fire({
+            icon: "error",
+            title: "Error...",
+            width: 900,
+            text: error.response.data.message,
+          });
         });
     },
 
@@ -826,20 +891,22 @@ export default {
         .get(`${self.url}Login/GetDataConfigFooter`)
         .then(function (response) {
           if (response.data.status == 0) {
-            console.log(response.data.data);
             self.themecolor = response.data.data.themecolor;
             self.textfooter = response.data.data.textfooter;
             self.colortextfooter = response.data.data.colortextfooter;
-            self.status = response.data.data.status == true ? 'active' : 'inactive';
-
+            self.status =
+              response.data.data.status == true ? "active" : "inactive";
           }
         })
         .catch(function (error) {
-          console.log(error);
+          Swal.fire({
+            icon: "error",
+            title: "Error...",
+            width: 900,
+            text: error.response.data.message,
+          });
         });
     },
-
-
   },
 };
 </script>

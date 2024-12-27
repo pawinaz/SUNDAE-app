@@ -1,8 +1,6 @@
 <template>
   <nav style="z-index: 3; background-color: white">
-    <v-toolbar v-if = "statustheme"
-    :color="themecolor" 
-    height="90">
+    <v-toolbar v-if="statustheme" :color="themecolor" height="90">
       <!-- <v-img
         alt="Logo"
         class="shrink app"
@@ -35,7 +33,6 @@
         "
       ></p>
 
-     
       <v-spacer></v-spacer>
       <v-menu offset-y>
         <template v-slot:activator="{ on: menu }">
@@ -44,12 +41,14 @@
           </v-btn>
           <div>
             <v-btn icon @click="toggleTheme">
-            <v-icon :color="isDarkTheme ? 'yellow darken-3' : 'blue-grey darken-4'">
-              {{ isDarkTheme ? "mdi-lightbulb-outline" : "mdi-lightbulb" }}
-            </v-icon>
-          </v-btn>
-          <v-icon color="text" left>mdi-account-heart</v-icon>
-   
+              <v-icon
+                :color="isDarkTheme ? 'yellow darken-3' : 'blue-grey darken-4'"
+              >
+                {{ isDarkTheme ? "mdi-lightbulb-outline" : "mdi-lightbulb" }}
+              </v-icon>
+            </v-btn>
+            <v-icon color="text" left>mdi-account-heart</v-icon>
+
             <span style="font-size: 18px; color: text; padding-right: 10px">{{
               Username
             }}</span>
@@ -76,9 +75,7 @@
       </v-menu>
     </v-toolbar>
 
-    <v-toolbar v-else
-    :color="'primary'" 
-    height="90">
+    <v-toolbar v-else :color="'primary'" height="90">
       <!-- <v-img
         alt="Logo"
         class="shrink app"
@@ -111,7 +108,6 @@
         "
       ></p>
 
-     
       <v-spacer></v-spacer>
       <v-menu offset-y>
         <template v-slot:activator="{ on: menu }">
@@ -120,12 +116,14 @@
           </v-btn>
           <div>
             <v-btn icon @click="toggleTheme">
-            <v-icon :color="isDarkTheme ? 'yellow darken-3' : 'blue-grey darken-4'">
-              {{ isDarkTheme ? "mdi-lightbulb-outline" : "mdi-lightbulb" }}
-            </v-icon>
-          </v-btn>
-          <v-icon color="text" left>mdi-account-heart</v-icon>
-   
+              <v-icon
+                :color="isDarkTheme ? 'yellow darken-3' : 'blue-grey darken-4'"
+              >
+                {{ isDarkTheme ? "mdi-lightbulb-outline" : "mdi-lightbulb" }}
+              </v-icon>
+            </v-btn>
+            <v-icon color="text" left>mdi-account-heart</v-icon>
+
             <span style="font-size: 18px; color: text; padding-right: 10px">{{
               Username
             }}</span>
@@ -151,7 +149,7 @@
         </v-list>
       </v-menu>
     </v-toolbar>
-    
+
     <v-dialog v-model="EditUserDialog" persistent width="800">
       <v-card>
         <v-card-title>
@@ -263,18 +261,17 @@ export default {
       EditPassword: "",
       EditConfirmPassword: "",
 
-      ConfigDialog:false,
-      themecolor:"",
-      logoimage:"",
-      statustheme:false
+      ConfigDialog: false,
+      themecolor: "",
+      logoimage: "",
+      statustheme: false,
     };
   },
 
   mounted() {
     let self = this;
     self.GetDataPermission();
-    self.GetDataConfigLoginPage()
-
+    self.GetDataConfigLoginPage();
   },
 
   methods: {
@@ -321,21 +318,25 @@ export default {
         });
     },
 
-    GetDataConfigLoginPage(){
-      let self =this;
+    GetDataConfigLoginPage() {
+      let self = this;
       axios
         .get(`${self.url}Login/GetDataConfigLoginPage`)
         .then(function (response) {
           if (response.data.status == 0) {
-            self.logoimage = response.data.data.logoimage
-            self.themecolor = response.data.data.themecolor
-            self.statustheme = response.data.data.status
+            self.logoimage = response.data.data.logoimage;
+            self.themecolor = response.data.data.themecolor;
+            self.statustheme = response.data.data.status;
           }
         })
         .catch(function (error) {
-          console.log(error);
+          Swal.fire({
+            icon: "error",
+            title: "Error...",
+            width: 900,
+            text: error.response.data.message,
+          });
         });
-
     },
 
     GetDataUserByToken(token) {
@@ -503,7 +504,7 @@ export default {
   padding-left: 20px !important;
 }
 .v-toolbar {
-  background-color: white ;
+  background-color: white;
 }
 
 .text-password {

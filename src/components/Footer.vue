@@ -31,7 +31,7 @@
 import axios from "axios";
 import enurl from "@/api/environment";
 // import LoadingComponent from "@/components/Loading";
-// import Swal from "sweetalert2/dist/sweetalert2.js";
+import Swal from "sweetalert2/dist/sweetalert2.js";
 
 export default {
   data() {
@@ -67,7 +67,12 @@ export default {
           }
         })
         .catch(function (error) {
-          console.log(error);
+          Swal.fire({
+            icon: "error",
+            title: "Error...",
+            width: 900,
+            text: error.response.data.message,
+          });
         });
 
     }

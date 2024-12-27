@@ -412,7 +412,6 @@ export default {
         .post(`${self.url}Redemption/GetDataRateCode`, temp)
         .then(function (response) {
           if (response.data.status == 0) {
-            // console.log(response.data.data);
             self.RateList = response.data.data;
           }
         })
@@ -529,7 +528,6 @@ export default {
           RateCode: self.RateData,
           Remark: self.Remark,
         };
-        console.log(temp);
         axios
           .post(`${self.url}Redemption/RedeemParking`, temp)
           .then(function (response) {

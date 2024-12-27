@@ -232,7 +232,7 @@
                           md="12"
                           justify="center"
                         >
-                        <v-col cols="12" md="1" align="center">
+                          <v-col cols="12" md="1" align="center">
                             <v-btn
                               style="color: white"
                               height="40"
@@ -254,7 +254,6 @@
                               Back
                             </v-btn>
                           </v-col>
-                          
                         </v-row>
                       </v-card-text>
                     </v-card>
@@ -379,6 +378,4 @@ export default {
   },
 };
 </script>
-<style scoped>
-</style>
-    
+<style scoped></style>

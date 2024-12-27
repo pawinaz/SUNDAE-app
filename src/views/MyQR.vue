@@ -3,11 +3,7 @@
     <v-card style="display: contents">
       <div style="margin: 10px">
         <v-card-text>
-          <v-row
-            cols="12"
-            justify="center"
-            class="mt-5"
-          >
+          <v-row cols="12" justify="center" class="mt-5">
             <v-col cols="12" md="6" align="center">
               <v-img
                 alt="Logo"
@@ -15,13 +11,19 @@
                 contain
                 :src="logoimage"
                 transition="scale-transition"
-                width="150"
+                width="100"
               />
-              <p class="mt-5" style="font-size: 25px; font-weight: bold; color: text">
+              <p
+                class="mt-5"
+                style="font-size: 25px; font-weight: bold; color: text"
+              >
                 {{ Username }}
               </p>
               <div v-if="LoadingDialog" class="mt-10">
-                <v-progress-circular indeterminate color="primary"></v-progress-circular>
+                <v-progress-circular
+                  indeterminate
+                  color="primary"
+                ></v-progress-circular>
               </div>
               <qrcode-vue
                 v-else
@@ -29,14 +31,25 @@
                 :value="QRvalue"
                 :size="QRsize"
                 level="M"
-                style="background-color: white; padding: 2%; width: 300px; display: flex; justify-content: center;"
+                style="
+                  background-color: white;
+                  padding: 2%;
+                  width: 300px;
+                  display: flex;
+                  justify-content: center;
+                "
               ></qrcode-vue>
-              <p class="mt-10" style="font-size: 18px; font-weight: bold; color: text">
+              <p
+                class="mt-10"
+                style="font-size: 18px; font-weight: bold; color: text"
+              >
                 {{ ChangeFormatDate(CreateTime) }}
               </p>
               <div class="mt-10">
                 <span style="font-size: 16px; color: text">Refresh In : </span>
-                <span style="font-size: 16px; font-weight: bold; color: text">{{ TextTime }}</span>
+                <span style="font-size: 16px; font-weight: bold; color: text">{{
+                  TextTime
+                }}</span>
               </div>
               <v-btn
                 height="40"
@@ -76,15 +89,15 @@ export default {
       CreateTime: "",
       TextTime: "",
 
-      ConfigDialog:false,
-      logoimage:""
+      ConfigDialog: false,
+      logoimage: "",
     };
   },
 
   async mounted() {
     let self = this;
     await self.getMyQR();
-    self.GetDataConfigLoginPage()
+    self.GetDataConfigLoginPage();
   },
 
   methods: {
@@ -158,25 +171,27 @@ export default {
       );
     },
     goToManagePreRegister() {
-      this.$router.push({ name: 'MainMenu' });
+      this.$router.push({ name: "MainMenu" });
     },
 
-    GetDataConfigLoginPage(){
-      let self =this;
+    GetDataConfigLoginPage() {
+      let self = this;
       axios
         .get(`${self.url}Login/GetDataConfigLoginPage`)
         .then(function (response) {
           if (response.data.status == 0) {
-            console.log(response.data.data)
-            self.logoimage = response.data.data.logoimage
+            self.logoimage = response.data.data.logoimage;
           }
         })
         .catch(function (error) {
-          console.log(error);
+          Swal.fire({
+            icon: "error",
+            title: "Error...",
+            width: 900,
+            text: error.response.data.message,
+          });
         });
     },
-
-    
   },
 };
 </script>
