@@ -429,23 +429,32 @@
     </v-dialog>
 
     <!--dialogconfiglogin-->
-    <v-dialog
-      v-model="loginsetconfig"
-      width="auto"
-    >
-      <v-card
-        max-width="400"
-        prepend-icon="mdi-update"
-        text="Your application will relaunch automatically after the update is complete."
-        title="Update in progress"
-      >
-        <template v-slot:actions>
-          <v-btn
-            class="ms-auto"
-            text="Ok"
-            @click="dialog = false"
-          ></v-btn>
-        </template>
+    <v-dialog v-model="showLoginDialog" persistent max-width="400">
+      <v-card>
+        <v-card-title class="text-h6 font-weight-bold">Login</v-card-title>
+        <v-divider></v-divider>
+        <v-card-text class="pa-4">
+          <v-text-field
+            v-model="loginUsername"
+            label="Username"
+            outlined
+            dense
+            class="mb-4"
+          ></v-text-field>
+          <v-text-field
+            v-model="loginPassword"
+            label="Password"
+            type="password"
+            outlined
+            dense
+            class="mb-4"
+          ></v-text-field>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions class="pa-3 justify-end">
+          <v-btn text color="grey" @click="showLoginDialog = false">Cancel</v-btn>
+          <v-btn text :color="themecolor" @click="checkLogin">Login</v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
 
@@ -541,6 +550,11 @@ export default {
       logo: require("@/assets/sundae.png"),
       imagelogin: "",
       loginsetconfig: false,
+      
+      //loginconfig
+      showLoginDialog: false,
+      loginUsername: '',
+      loginPassword: '',
     };
   },
 
@@ -777,9 +791,18 @@ export default {
       }
     },
     OpenConFigDialog() {
-      let self = this;
-      self.ConfigDialog = true;
+      this.showLoginDialog = true; // เปิด dialog สำหรับการเข้าสู่ระบบ
     },
+
+    checkLogin() {
+      if (this.loginUsername === 'admin' && this.loginPassword === 'fsadmin') {
+        this.showLoginDialog = false;
+        this.ConfigDialog = true;
+      } else {
+        Swal.fire("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง! กรุณากรอกใหม่");
+      }
+    },
+
     onPickFile() {
       let self = this;
       self.$refs.fileimagelogo.click();
