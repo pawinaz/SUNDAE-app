@@ -791,7 +791,7 @@ export default {
       }
     },
     OpenConFigDialog() {
-      this.showLoginDialog = true; // เปิด dialog สำหรับการเข้าสู่ระบบ
+      this.showLoginDialog = true;
     },
 
     checkLogin() {
